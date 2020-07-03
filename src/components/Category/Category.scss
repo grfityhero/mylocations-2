@@ -1,0 +1,15 @@
+.category-item {
+  background: rgb(224, 209, 248);
+  font-size: 1rem;
+  cursor: pointer;
+}
+.category-item:hover {
+  background: rgb(204, 175, 250);
+  color: black;
+
+  font-weight: bold;
+}
+.category-item-active  {
+  background: rgb(113, 71, 180)!important;
+  color:white;
+}
