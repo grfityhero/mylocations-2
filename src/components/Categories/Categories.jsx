@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState,useEffect } from 'react'
 import Category from "../Category/Category"
 import "./Categories.scss"
 import CategoriesContext from "../../context/CategoriesContext"
@@ -11,9 +11,12 @@ function Categories({
 }) {
   //deconstruct state ,dispatch from CategoriesContext
   const { state } = React.useContext(CategoriesContext)
+  useEffect(() => {
+
+  }, [state.categories])
 
   const toggleActive = (index) => {
-    setActiveCategory(index)
+    setActiveCategory(state.categories[index].name)
     setshowEditor(!showEditor)
   }
   return (
@@ -23,7 +26,7 @@ function Categories({
           <Category
             index={index}
             key={index}
-            active={activeCategory === index}
+            active={activeCategory === catItem.name}
             name={catItem.name}
             toggleActive={() => toggleActive(index)}
           />

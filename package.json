@@ -1,5 +1,5 @@
 {
-  "homepage": "http://grfityhero.github.io/welldoneexam",
+  "homepage": "http://grfityhero.github.io/mylocations",
   "name": "mylocations",
   "version": "0.1.0",
   "private": true,
@@ -9,10 +9,12 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "framer-motion": "^1.11.1",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "reactstrap": "^8.5.1"
   },
   "scripts": {
     "dev": "react-scripts start",

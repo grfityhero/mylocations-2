@@ -5,6 +5,7 @@
   background: #000000;
   width: 250px;
   border-radius: 7px;
+  padding: 10px;
 }
 .editor-wrapper-hide {
   display: none;
@@ -17,6 +18,15 @@
   color: white;
   padding: 11px;
   cursor: pointer;
+}
+
+.add-new-category:hover,
+.edit-category:hover,
+.delete-category :hover {
+ font-weight: bold;
+}
+.formWrapper{
+  width:  100%;
 }
 .formWrapper-hide {
   padding: 10px;

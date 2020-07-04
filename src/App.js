@@ -5,6 +5,7 @@ import Categories from "./components/Categories/Categories"
 import Editor from "./components/Editor/Editor"
 import CategoriesContext from "./context/CategoriesContext.js"
 import { ADD_ITEM, DELETE_ITEM, EDIT_ITEM } from "./Types/CategoriesTypes"
+import { motion } from "framer-motion"
 
 let storageState = localStorage.getItem("state")
 let initialState
@@ -25,15 +26,15 @@ if (storageState) {
         locationname: "Name2",
         address: "addr1",
         coordinates: "coordinates1",
-        category: "category-1",
+        category: "category-2",
       },
     ],
   }
 }
 
 function App() {
-  const [showEditor, setshowEditor] = useState(false)
-  const [activeCategory, setActiveCategory] = useState(-1)
+  const [showEditor, setshowEditor] = useState(true)
+  const [activeCategory, setActiveCategory] = useState("")
 
   const reducer = (state, action) => {
     switch (action.type) {
@@ -53,30 +54,30 @@ function App() {
         }
       }
       case DELETE_ITEM: {
-        console.log("delete item number ", activeCategory)
-     
+        console.log("delete item name ", activeCategory)
+
         localStorage.setItem(
           "state",
           JSON.stringify({
             ...state,
             categories: [
               ...state.categories.filter(
-                (item) => item !== state.categories[activeCategory]
+                (item) => item.name !== activeCategory
               ),
             ],
             location: { ...state.location },
           })
         )
+
         return {
           ...state,
           categories: [
-            ...state.categories.filter(
-              (item) => item !== state.categories[activeCategory]
-            ),
+            ...state.categories.filter((item) => item.name !== activeCategory),
           ],
           location: { ...state.location },
         }
       }
+
       default:
         return state
     }
@@ -86,9 +87,13 @@ function App() {
   return (
     <CategoriesContext.Provider value={{ state, dispatch }}>
       <div className="App">
-        {/* <Editor showEditor={true} /> */}
         <Navbar />
-        <Editor showEditor={showEditor} setshowEditor={setshowEditor} />
+        <Editor
+          showEditor={showEditor}
+          setshowEditor={setshowEditor}
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory}
+        />
         <Categories
           setshowEditor={setshowEditor}
           activeCategory={activeCategory}

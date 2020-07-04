@@ -3,31 +3,27 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline"
 import EditIcon from "@material-ui/icons/Edit"
 import CategoriesContext from "../../context/CategoriesContext"
-
 import "./Editor.scss"
-import { ADD_ITEM, DELETE_ITEM, EDIT_ITEM } from "../../Types/CategoriesTypes"
+import Addnew from "./Addnew"
+import ModalDeleteAction from "./ModalDeleteAction"
 
-const Editor = ({ showEditor, setshowEditor }) => {
+const Editor = ({
+  showEditor,
+  setshowEditor,
+  activeCategory,
+  setActiveCategory,
+}) => {
   const { state, dispatch } = React.useContext(CategoriesContext)
   const [showAddCatForm, setShowAddCatForm] = useState(false)
-  const [newCatName, setnewCatName] = useState("")
+  const [showModalDelete, setshowModalDelete] = useState(false)
 
   const handleAddCat = () => {
-    setShowAddCatForm(!showAddCatForm)
+     setShowAddCatForm(!showAddCatForm) 
   }
   const handleDeleteCategory = () => {
-    dispatch({ type: DELETE_ITEM, payload: 'bla' })
+    setshowModalDelete(true)
   }
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log(newCatName)
-    dispatch({ type: ADD_ITEM, payload: newCatName })
-    setShowAddCatForm(false)
-    setshowEditor(false)
-  }
-  const handleChange = (e) => {
-    setnewCatName(e.target.value)
-  }
+
   return (
     <div className="editor-section container-fluid">
       <div
@@ -35,21 +31,24 @@ const Editor = ({ showEditor, setshowEditor }) => {
           showEditor ? "editor-wrapper mx-auto" : "editor-wrapper-hide mx-auto"
         }
       >
+        {/* modal confirm delete */}
+        <ModalDeleteAction
+          showModalDelete={showModalDelete}
+          setshowModalDelete={setshowModalDelete}
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory}
+        />
+
         <div className="add-new-category" onClick={handleAddCat}>
           <AddCircleOutlineIcon />
           Add Category
         </div>
         <div className={showAddCatForm ? "formWrapper" : "formWrapper-hide"}>
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              onChange={handleChange}
-              placeholder="Enter New Category Name"
-            />
-            <hr />
-
-            <input type="submit" value="Submit"></input>
-          </form>
+          <Addnew
+            showAddCatForm={showAddCatForm}
+            setShowAddCatForm={setShowAddCatForm}
+            
+          />
         </div>
 
         <div className="edit-category">

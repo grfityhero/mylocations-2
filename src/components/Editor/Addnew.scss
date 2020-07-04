@@ -1,0 +1,36 @@
+.add-form-wrapper {
+    position: relative;
+  width: 100% !important;
+  padding-bottom: 13px;
+  border-bottom: 1px solid white;
+}
+
+.add-input-text {
+  width: 100%;
+}
+
+.submit-button {
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 6px;
+  width: 100%;
+  background: black;
+  color: white;
+  text-decoration: underline;
+ 
+}
+
+.error-message {
+   
+  color: white;
+  background: red;
+  
+}
+.anim1{
+    width:100px;
+    height: 100px;
+    background: rgb(107, 55, 114);
+    color:white;
+    padding:10px;
+}
+
