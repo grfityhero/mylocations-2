@@ -1,4 +1,8 @@
 @import "./Colors/ColorSchema.scss";
+.App {
+  background: $bg-gradient;
+  height: 100vh;
+}
 .container {
   margin-top: 50px;
   background: $morelight;
@@ -16,9 +20,9 @@
   align-self: start;
 }
 .locations-main-wrapper {
-  padding:7px;
-  margin-top:5px;
-  background:$light;
+  padding: 7px;
+  margin-top: 5px;
+  background: $light;
   border-radius: 11px;
   background: $light;
   width: 65%;
