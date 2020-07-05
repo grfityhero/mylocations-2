@@ -1,0 +1,25 @@
+@import "./Colors/ColorSchema.scss";
+.container {
+  margin-top: 50px;
+  background: $morelight;
+  padding: 7px;
+}
+.categories-editor-formWrapper {
+  width: 100%;
+  display: flex;
+  padding: 5px;
+}
+.editor-wrapper {
+}
+.categories-wrapper-main {
+  width: 35%;
+  align-self: start;
+}
+.locations-main-wrapper {
+  padding:7px;
+  margin-top:5px;
+  background:$light;
+  border-radius: 11px;
+  background: $light;
+  width: 65%;
+}

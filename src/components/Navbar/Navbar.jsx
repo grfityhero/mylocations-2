@@ -1,5 +1,5 @@
 import React from "react"
-import './Navbar.scss'
+import "./Navbar.scss"
 function Navbar() {
   return (
     <div>
@@ -27,8 +27,8 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item active">
-              <a className="nav-link menu-item" href="/#">
-                Categories <span className="sr-only">(current)</span>
+              <a className="nav-link menu-item title" href="/#">
+                My-Locations App <span className="sr-only">(current)</span>
               </a>
             </li>
           </ul>

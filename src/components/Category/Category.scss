@@ -1,15 +1,16 @@
+@import "../../Colors/ColorSchema.scss";
+
 .category-item {
-  background: rgb(224, 209, 248);
+  background: $light;
   font-size: 1rem;
   cursor: pointer;
 }
 .category-item:hover {
-  background: rgb(204, 175, 250);
-  color: black;
+  background: $primary;
 
   font-weight: bold;
 }
-.category-item-active  {
-  background: rgb(113, 71, 180)!important;
-  color:white;
+.category-item-active {
+  background: $primary;
+  color: $white;
 }

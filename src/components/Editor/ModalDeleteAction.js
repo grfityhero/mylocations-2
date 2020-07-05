@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import CategoriesContext from "../../context/CategoriesContext"
-import { DELETE_ITEM } from "../../Types/CategoriesTypes"
+import { DELETE_ITEM, RESET } from "../../Types/CategoriesTypes"
 import "./modalDelete.scss"
 import { Modal, ModalBody, ModalFooter } from "reactstrap"
 
@@ -9,19 +9,20 @@ const ModalDeleteAction = ({
   setshowModalDelete,
   activeCategory,
   setActiveCategory,
+  setActiveLocation,
 }) => {
   const { state, dispatch } = React.useContext(CategoriesContext)
 
   const handleDelete = (confirm) => {
-    confirm && dispatch({ type: DELETE_ITEM, payload: activeCategory })
-    setshowModalDelete(false)
+    if (confirm) {
+      dispatch({ type: DELETE_ITEM, payload: activeCategory })
+      dispatch({ type: RESET })
+      setshowModalDelete(false)
+    }
   }
   return (
     <div>
       <div>
-        <div style={{ color: "white" }}>
-          <h4>Tool Box</h4>
-        </div>
         <Modal
           isOpen={showModalDelete}
           style={{ top: "5rem" }}
@@ -31,7 +32,7 @@ const ModalDeleteAction = ({
             <div className="modal-text">
               Are you sure you want to delete {activeCategory} &nbsp; ?
             </div>
-            <div  className="btn-wrapper">
+            <div className="btn-wrapper">
               <button className="btn-modal" onClick={() => handleDelete(true)}>
                 Yes
               </button>

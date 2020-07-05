@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import DeleteIcon from "@material-ui/icons/Delete"
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline"
 import EditIcon from "@material-ui/icons/Edit"
@@ -6,26 +6,45 @@ import CategoriesContext from "../../context/CategoriesContext"
 import "./Editor.scss"
 import Addnew from "./Addnew"
 import ModalDeleteAction from "./ModalDeleteAction"
+import BuildIcon from "@material-ui/icons/Build"
 
 const Editor = ({
   showEditor,
-  setshowEditor,
   activeCategory,
   setActiveCategory,
+  setActiveLocation,
+  editMode,
+  seteditMode,
 }) => {
   const { state, dispatch } = React.useContext(CategoriesContext)
   const [showAddCatForm, setShowAddCatForm] = useState(false)
+  const [showDelete, setShowDelete] = useState(false)
+  const [showEdit, setShowEhowEdit] = useState(false)
   const [showModalDelete, setshowModalDelete] = useState(false)
-
+  useEffect(() => {
+    if (activeCategory) {
+      setShowDelete(true)
+      setShowEhowEdit(true)
+    } else {
+      setShowDelete(false)
+      setShowEhowEdit(false)
+    }
+  }, [activeCategory])
   const handleAddCat = () => {
-     setShowAddCatForm(!showAddCatForm) 
+    setShowAddCatForm(!showAddCatForm)
   }
   const handleDeleteCategory = () => {
     setshowModalDelete(true)
   }
+  const handleEditCategory = () => {
+    seteditMode(true)
+  }
 
   return (
     <div className="editor-section container-fluid">
+      <div className="tool-icon">
+        <BuildIcon />
+      </div>
       <div
         className={
           showEditor ? "editor-wrapper mx-auto" : "editor-wrapper-hide mx-auto"
@@ -37,6 +56,7 @@ const Editor = ({
           setshowModalDelete={setshowModalDelete}
           activeCategory={activeCategory}
           setActiveCategory={setActiveCategory}
+          setActiveLocation={setActiveLocation}
         />
 
         <div className="add-new-category" onClick={handleAddCat}>
@@ -47,18 +67,20 @@ const Editor = ({
           <Addnew
             showAddCatForm={showAddCatForm}
             setShowAddCatForm={setShowAddCatForm}
-            
           />
         </div>
-
-        <div className="edit-category">
-          <EditIcon />
-          Edit selected Category
-        </div>
-        <div className="delete-category" onClick={handleDeleteCategory}>
-          <DeleteIcon />
-          Delete selected Category
-        </div>
+        {showDelete && (
+          <div className="edit-category" onClick={handleEditCategory}>
+            <EditIcon />
+            Edit selected Category
+          </div>
+        )}
+        {showEdit && (
+          <div className="delete-category" onClick={handleDeleteCategory}>
+            <DeleteIcon />
+            Delete selected Category
+          </div>
+        )}
       </div>
     </div>
   )

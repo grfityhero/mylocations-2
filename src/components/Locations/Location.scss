@@ -1,0 +1,51 @@
+@import "../../Colors/ColorSchema.scss";
+.list-location {
+  list-style: none;
+}
+
+.view-edit-wrapper {
+}
+
+.view-mode-container {
+  display: flex;
+
+  .titles {
+    width: 30%;
+  }
+  .values {
+    width: 70%;
+  }
+}
+
+.edit-mode-container {
+  display: flex;
+  .titles {
+    width: 30%;
+    margin-right: 15px;
+    margin-top: 5px;
+    padding:5px;
+  }
+  .values {
+    padding: 3px;
+    width: 70%;
+  }
+  .btn-wrapper{
+      width: 100%;
+      
+  }
+  .btn-update {
+    padding: 5px;
+    border: 1px solid white;
+    margin: 5px;
+    border-radius: 5px;
+    background: $dark;
+    color: white;
+    min-width: 89px;
+  }
+  input {
+    padding-left: 10px;
+    width: 90%;
+    border: none;
+    border-bottom: 2px solid #c300ff;
+  }
+}
