@@ -120,8 +120,8 @@ function App() {
             action.payload,
           ],
         }
-        console.log(tmpState)
-        JSON.stringify({
+       
+        localStorage.setItem('state',JSON.stringify({
           ...state,
           categories: [...state.categories],
           location: [
@@ -130,7 +130,8 @@ function App() {
             ),
             action.payload,
           ],
-        })
+        }))
+
 
         return {
           ...state,
@@ -143,6 +144,7 @@ function App() {
             action.payload,
           ],
         }
+
       }
       case RESET: {
         setActiveCategory("")

@@ -17,8 +17,8 @@ const ModalDeleteAction = ({
     if (confirm) {
       dispatch({ type: DELETE_ITEM, payload: activeCategory })
       dispatch({ type: RESET })
-      setshowModalDelete(false)
     }
+    setshowModalDelete(false)
   }
   return (
     <div>

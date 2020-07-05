@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react"
 import CategoriesContext from "../../context/CategoriesContext"
 import "./Location.scss"
-import { UPDATE_LOCATION} from "../../Types/CategoriesTypes"
+import { UPDATE_LOCATION, RESET } from "../../Types/CategoriesTypes"
+import { motion } from "framer-motion"
 
-function Locations({ activeLocation, editMode, seteditMode }) {
+function Locations({ activeCategory, activeLocation, editMode, seteditMode }) {
   const { state, dispatch } = React.useContext(CategoriesContext)
+  const [messages, setMessages] = useState("")
+  const [showMsg, setShowMsg] = useState(false)
+  const [showComonent, setshowComponent] = useState(true)
+
   const [locationState, setlocationState] = useState({
     name: "",
     address: "",
@@ -12,19 +17,35 @@ function Locations({ activeLocation, editMode, seteditMode }) {
     category: "",
   })
   useEffect(() => {
-    console.log(editMode)
+    console.log(activeCategory)
     setlocationState(activeLocation)
-  }, [editMode])
+    if (activeCategory!=='') {
+      setshowComponent(true)
+    }else{
+      setshowComponent(false)
+    }
+    
+  }, [editMode, activeCategory])
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(locationState)
+    seteditMode(false)
+    setMessages("Updated successfully!")
+    setShowMsg(true)
+
     dispatch({ type: UPDATE_LOCATION, payload: locationState })
+    dispatch({ type: RESET })
+    setTimeout(() => {
+      setShowMsg(false)
+      setshowComponent(false)
+    }, 1500)
   }
 
   const handleCancel = (e) => {
     e.preventDefault()
     setlocationState(activeLocation)
+
+    seteditMode(false)
   }
   const handleChange = (event) => {
     let value = event.target.value
@@ -35,78 +56,88 @@ function Locations({ activeLocation, editMode, seteditMode }) {
     setlocationState({ ...locationState, [name]: value })
   }
   return (
-    <div className="view-edit-wrapper">
-      {!editMode ? (
-        <div className="view-mode-container">
-          <div className="titles">
-            <p>Category:</p>
-            <p>Name:</p>
-            <p>Address:</p>
-            <p>Coordinates:</p>
-          </div>
-          <div className="values">
-            <p>{activeLocation.category}</p>
-            <p>{activeLocation.name}</p>
-            <p>{activeLocation.address}</p>
-            <p>{activeLocation.coordinates}</p>
-          </div>
-        </div>
-      ) : (
-        <div className="edit-mode-container">
-          <div className="titles">
-            <p>Category:</p>
-            <p>Name:</p>
-            <p>Address:</p>
-            <p>Coordinates:</p>
-          </div>
-
-          <div className="values">
-            <form onSubmit={handleSubmit}>
-              <p>
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  value={locationState.category}
-                  name="category"
-                ></input>
-              </p>
-              <p>
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  value={locationState.name}
-                  name="name"
-                ></input>
-              </p>
-              <p>
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  value={locationState.address}
-                  name="address"
-                ></input>
-              </p>
-              <p>
-                <input
-                  type="text"
-                  value={locationState.coordinates}
-                  onChange={handleChange}
-                  name="coordinates"
-                ></input>
-              </p>
-              <div className="btn-wrapper">
-                <button className="btn-update" type="submit">
-                  Update
-                </button>
-                <button className="btn-update" onClick={handleCancel}>
-                  cancel
-                </button>
+    <>
+      {showComonent && (
+        <div className="view-edit-wrapper">
+          {!editMode ? (
+            <div className="view-mode-container">
+              <div className="titles">
+                <p>Category:</p>
+                <p>Name:</p>
+                <p>Address:</p>
+                <p>Coordinates:</p>
               </div>
-            </form>
-          </div>
+              <div className="values">
+                <p>{activeLocation.category}</p>
+                <p>{activeLocation.name}</p>
+                <p>{activeLocation.address}</p>
+                <p>{activeLocation.coordinates}</p>
+              </div>
+            </div>
+          ) : (
+            <div className="edit-mode-container">
+              <div className="titles">
+                <p>Category:</p>
+                <p>Name:</p>
+                <p>Address:</p>
+                <p>Coordinates:</p>
+              </div>
+
+              <div className="values">
+                <form onSubmit={handleSubmit}>
+                  <p className="category-title">{locationState.category}</p>
+                  <p>
+                    <input
+                      type="text"
+                      onChange={handleChange}
+                      value={locationState.name}
+                      name="name"
+                    ></input>
+                  </p>
+                  <p>
+                    <input
+                      type="text"
+                      onChange={handleChange}
+                      value={locationState.address}
+                      name="address"
+                    ></input>
+                  </p>
+                  <p>
+                    <input
+                      type="text"
+                      value={locationState.coordinates}
+                      onChange={handleChange}
+                      name="coordinates"
+                    ></input>
+                  </p>
+                  <div className="btn-wrapper">
+                    <button className="btn-update" type="submit">
+                      Update
+                    </button>
+                    <button className="btn-update" onClick={handleCancel}>
+                      cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
         </div>
       )}
-    </div>
+      {showMsg ? (
+        <motion.div
+          className="anim1"
+          animate={{
+            scale: [1, 2, 1, 0],
+            rotate: [0, 0, 270, 0],
+            borderRadius: ["20%", "20%", "50%", "20%"],
+          }}
+          transition={{ ease: "easeOut", duration: 1.8 }}
+        >
+          {messages}
+        </motion.div>
+      ) : null}
+    </>
   )
 }
 
