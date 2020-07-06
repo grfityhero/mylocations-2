@@ -27,7 +27,7 @@ function Categories({
       setshowEditor(!showEditor)
     }
   }
-  
+
   function getCurrentlocation(index) {
     let tmparr = state.location.filter(
       (item) => item.category === state.categories[index].name

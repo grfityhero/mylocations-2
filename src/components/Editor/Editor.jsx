@@ -7,7 +7,7 @@ import "./Editor.scss"
 import Addnew from "./Addnew"
 import ModalDeleteAction from "./ModalDeleteAction"
 import BuildIcon from "@material-ui/icons/Build"
-
+import "../../styles/hover.css"
 const Editor = ({
   showEditor,
   activeCategory,
@@ -41,15 +41,16 @@ const Editor = ({
   }
 
   return (
-    <div className="editor-section container-fluid">
+    <div className="editor-section container-fluid ">
+      <div className="editortool-title">
+        {showEdit && !showAddCatForm  && <h6>Editing Tools</h6>}
+        {!showEdit && !showAddCatForm && <h6>Categories</h6>}
+        {showAddCatForm && <h6>Add Category</h6>}
+      </div>
       <div className="tool-icon">
         <BuildIcon />
       </div>
-      <div
-        className={
-          showEditor ? "editor-wrapper mx-auto" : "editor-wrapper-hide mx-auto"
-        }
-      >
+      <div className={showEditor ? "editor-wrapper" : "editor-wrapper-hide"}>
         {/* modal confirm delete */}
         <ModalDeleteAction
           showModalDelete={showModalDelete}
@@ -59,9 +60,9 @@ const Editor = ({
           setActiveLocation={setActiveLocation}
         />
 
-        <div className="add-new-category" onClick={handleAddCat}>
-          <AddCircleOutlineIcon />
-          Add Category
+        <div className="add-new-category hvr-pulse-grow" onClick={handleAddCat}>
+          <AddCircleOutlineIcon className="toolicon" />
+          <span className="tool-title">Add Category</span>
         </div>
         <div className={showAddCatForm ? "formWrapper" : "formWrapper-hide"}>
           <Addnew
@@ -69,16 +70,22 @@ const Editor = ({
             setShowAddCatForm={setShowAddCatForm}
           />
         </div>
-        {showDelete && (
-          <div className="edit-category" onClick={handleEditCategory}>
-            <EditIcon />
-            Edit selected Category
+        {showDelete && !showAddCatForm && (
+          <div
+            className="edit-category hvr-pulse-grow"
+            onClick={handleEditCategory}
+          >
+            <EditIcon className="toolicon" />
+            <span className="tool-title">Edit selected Category</span>
           </div>
         )}
-        {showEdit && (
-          <div className="delete-category" onClick={handleDeleteCategory}>
-            <DeleteIcon />
-            Delete selected Category
+        {showEdit && !showAddCatForm && (
+          <div
+            className="delete-category hvr-pulse-grow"
+            onClick={handleDeleteCategory}
+          >
+            <DeleteIcon className="toolicon" />
+            <span className="tool-title">Delete selected Category</span>
           </div>
         )}
       </div>

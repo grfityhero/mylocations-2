@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import "./Category.scss"
 
+
 const Category = ({ name, toggleActive, index, active }) => {
   
   return (

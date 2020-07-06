@@ -51,7 +51,7 @@ function Addnew({ showAddCatForm, setShowAddCatForm }) {
             className="add-input-text"
             type="text"
             onChange={handleChange}
-            placeholder="Enter New Category Name"
+            placeholder="Enter New Category"
           />
 
           <input type="submit" value="Submit" className="submit-button"></input>

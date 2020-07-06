@@ -6,8 +6,21 @@
 }
 
 .category-list {
-  
   width: 100%;
   margin: auto auto;
 }
 
+@media (max-width: 600px) {
+  .listGroup-wrapper {
+    width: 100%;
+    margin-top: 4px;
+    padding: 5px;
+    > ul {
+      li {
+        padding: 6px;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+}

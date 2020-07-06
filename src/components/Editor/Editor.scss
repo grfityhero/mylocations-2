@@ -1,4 +1,4 @@
-@import '../../Colors/ColorSchema.scss'; 
+@import "../../Colors/ColorSchema.scss";
 
 .editor-section {
   display: relative;
@@ -41,12 +41,38 @@
   display: none;
 }
 .tool-icon {
-position: absolute;
-padding:10px;
-border-radius: 50%;
-   margin-top:-30px;
-   margin-left:-20px;
-   margin-bottom:auto;
+  position: absolute;
+  padding: 10px;
+  border-radius: 50%;
+  margin-top: -30px;
+  margin-left: -20px;
+  margin-bottom: auto;
   background: $secondary;
   color: white;
+}
+.editortool-title{
+  color:white;
+  text-align: center;
+  margin-left:-10%;
+}
+/* mobile */
+@media (max-width: 600px) {
+
+  .editor-wrapper {
+     padding-left:9%; 
+  
+  }
+  .tool-title {
+    display: none;
+  }
+
+  .tool-icon {
+    left:30px;
+    padding: 15px;
+  }
+  .toolicon {
+    width: 2em !important;
+    height: 2em !important;
+    margin-right: 4px;
+  }
 }

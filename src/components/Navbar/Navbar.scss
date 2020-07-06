@@ -3,22 +3,7 @@
 .nav-custom-bg {
   background-color: $primary;
   color: white;
+>h5{
+  margin:auto auto;
 }
-
-.menu-item  {
-  color: white !important;
-  font-size: 1rem;
-}
-.title-menu{
-  font-weight: bold;
-  font-size: 1.5rem;
-
-}
-.navbar-toggler-icon{
-  color:white!important;
- 
-  z-index: 1;
-}
-.burger-custom{
-  color:white;
 }

@@ -1,37 +1,61 @@
 @import "../../Colors/ColorSchema.scss";
 .add-form-wrapper {
-    position: relative;
+  position: relative;
   width: 100% !important;
   padding-bottom: 13px;
   border-bottom: 1px solid $white;
 }
-
 .add-input-text {
-  width: 100%;
+  width: 30%;
+  margin: 5px;
+  padding: 6px;
+  border-radius: 6px;
 }
 
 .submit-button {
   border: 1px solid $white;
   border-radius: 5px;
   padding: 6px;
-  width: 100%;
+  margin: 6px;
+  width: 130px;
   background: $dark;
   color: $white;
   text-decoration: underline;
- 
 }
-
 .error-message {
-   
   color: $white;
-  background: red;
-  
 }
-.anim1{
-    width:100px;
-    height: 100px;
-    background:$secondary;
-    color:white;
-    padding:10px;
+.anim1 {
+  width: 100px;
+  height: 100px;
+  background: $secondary;
+  color: white;
+  padding: 10px;
 }
 
+/* mobile */
+@media (max-width: 600px) {
+  .add-form-wrapper {
+    border: none;
+  transform: translateX(-10px)
+  }
+  .add-input-text {
+    width: 60%;
+    margin: 5px;
+    margin-top:0px;
+    padding: 6px;
+    font-size: 0.9rem;
+    border-radius: 6px;
+  }
+
+  .submit-button {
+    
+    border-radius: 5px;
+    padding: 6px;
+    
+    width: 30%;
+    background: $dark;
+    color: $white;
+    text-decoration: underline;
+  }
+}

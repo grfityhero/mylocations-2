@@ -3,7 +3,7 @@ import CategoriesContext from "../../context/CategoriesContext"
 import "./Location.scss"
 import { UPDATE_LOCATION, RESET } from "../../Types/CategoriesTypes"
 import { motion } from "framer-motion"
-
+import "../../styles/hover.css"
 function Locations({ activeCategory, activeLocation, editMode, seteditMode }) {
   const { state, dispatch } = React.useContext(CategoriesContext)
   const [messages, setMessages] = useState("")
@@ -111,10 +111,10 @@ function Locations({ activeCategory, activeLocation, editMode, seteditMode }) {
                     ></input>
                   </p>
                   <div className="btn-wrapper">
-                    <button className="btn-update" type="submit">
+                    <button className="btn-update hvr-bounce-in" type="submit">
                       Update
                     </button>
-                    <button className="btn-update" onClick={handleCancel}>
+                    <button className="btn-update hvr-bounce-in" onClick={handleCancel}>
                       cancel
                     </button>
                   </div>
