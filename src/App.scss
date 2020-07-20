@@ -1,5 +1,6 @@
 @import "./Colors/ColorSchema.scss";
 /* all size */
+
 .App {
   background: $bg-gradient;
   height: 100vh;
@@ -9,6 +10,7 @@
   background: $morelight;
   padding: 7px;
 }
+
 .categories-editor-formWrapper {
   width: 100%;
   display: flex;

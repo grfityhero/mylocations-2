@@ -3,15 +3,15 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline"
 import EditIcon from "@material-ui/icons/Edit"
 import MainContext from "../../context/MainContext"
-import "./Editor.scss"
-import Addnew from "./Addnew"
-import ModalDeleteAction from "./ModalDeleteAction"
+import "./LocationsEditor.scss"
+import Addnew from "./AddNewLocation"
+import ModalDeleteActionLocation from "./ModalDeleteActionLocation"
 import BuildIcon from "@material-ui/icons/Build"
 import "../../styles/hover.css"
 import { EDIT_MODE } from "../../Types/ToolsTypes"
 
-const Editor = () => {
-  const { state,  toolsState, toolsDispatch } = React.useContext(
+const LocationsEditor = () => {
+  const { state, dispatch, toolsState, toolsDispatch } = React.useContext(
     MainContext
   )
   const [showAddCatForm, setShowAddCatForm] = useState(false)
@@ -20,14 +20,14 @@ const Editor = () => {
   const [showModalDelete, setshowModalDelete] = useState(false)
 
   useEffect(() => {
-    if (state.activeCategory) {
+    if (state.activeLocation) {
       setShowDelete(true)
       setShowEhowEdit(true)
     } else {
       setShowDelete(false)
       setShowEhowEdit(false)
     }
-  }, [state.activeCategory])
+  }, [state.activeLocation])
   const handleAddCat = () => {
     setShowAddCatForm(!showAddCatForm)
   }
@@ -35,33 +35,35 @@ const Editor = () => {
     setshowModalDelete(true)
   }
   const handleEditCategory = () => {
-    toolsDispatch({
-      type: EDIT_MODE,
-      payload: true,
-    })
+    /* seteditMode(true) */
+    dispatch({ type: EDIT_MODE, payload: true })
   }
 
   return (
-    <div className="editor-section container-fluid ">
-      <div className="editortool-title">
+    <div className="locations-editor-section container-fluid ">
+      <div className="locations-editortool-title">
         {showEdit && !showAddCatForm && <h6>Editing Tools</h6>}
-        {!showEdit && !showAddCatForm && <h6>Categories</h6>}
-        {showAddCatForm && <h6>Add Category</h6>}
+        {!showEdit && !showAddCatForm && <h6>Locations</h6>}
+        {showAddCatForm && <h6>Add Location</h6>}
       </div>
       <div className="tool-icon">
         <BuildIcon />
       </div>
       <div
         className={
-          toolsState.showEditor ? "editor-wrapper" : "editor-wrapper-hide"
+          toolsState.showEditor
+            ? "locations-editor-wrapper"
+            : "locations-editor-wrapper-hide"
         }
       >
         {/* modal confirm delete */}
-        <ModalDeleteAction
+        {/*   <ModalDeleteActionLocation
           showModalDelete={showModalDelete}
-          setshowModalDelete={setshowModalDelete}/>
-       
-        
+          setshowModalDelete={setshowModalDelete}
+          activeLocation={activeLocation}
+          setactiveLocation={setactiveLocation}
+          setActiveLocation={setActiveLocation}
+        /> */}
 
         <div className="add-new-category hvr-pulse-grow" onClick={handleAddCat}>
           <AddCircleOutlineIcon className="toolicon" />
@@ -96,4 +98,4 @@ const Editor = () => {
   )
 }
 
-export default Editor
+export default LocationsEditor

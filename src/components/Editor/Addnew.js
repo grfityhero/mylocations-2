@@ -1,19 +1,19 @@
 import React, { useState, useRef } from "react"
-import CategoriesContext from "../../context/CategoriesContext"
-import { ADD_ITEM } from "../../Types/CategoriesTypes"
+import MainContext from "../../context/MainContext"
+import { ADD_CATEGORY_ITEM } from "../../Types/CategoriesTypes"
 import "./Addnew.scss"
 import { motion } from "framer-motion"
 
 function Addnew({ showAddCatForm, setShowAddCatForm }) {
   const inpRef = useRef(null)
-  const { state, dispatch } = React.useContext(CategoriesContext)
+  const { state, dispatch } = React.useContext(MainContext)
   const [newCatName, setnewCatName] = useState("")
   const [errorText, seterrorText] = useState("")
   const handleSubmit = (e) => {
     e.preventDefault()
 
     if (newCatName) {
-      dispatch({ type: ADD_ITEM, payload: newCatName })
+      dispatch({ type: ADD_CATEGORY_ITEM, payload: newCatName })
       setShowAddCatForm(false)
       setnewCatName("")
     } else {

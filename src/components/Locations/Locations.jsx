@@ -1,143 +1,76 @@
-import React, { useState, useEffect } from "react"
-import CategoriesContext from "../../context/CategoriesContext"
-import "./Location.scss"
-import { UPDATE_LOCATION, RESET } from "../../Types/CategoriesTypes"
-import { motion } from "framer-motion"
-import "../../styles/hover.css"
-function Locations({ activeCategory, activeLocation, editMode, seteditMode }) {
-  const { state, dispatch } = React.useContext(CategoriesContext)
-  const [messages, setMessages] = useState("")
-  const [showMsg, setShowMsg] = useState(false)
-  const [showComonent, setshowComponent] = useState(true)
+import React, { useEffect, useState } from "react"
+import Location from "../Location/Location"
+import MainContext from "../../context/MainContext"
+import "./Locations.scss"
+import LocationsEditor from "../LocationsEditor/LocationsEditor"
+import { EDIT_MODE } from "../../Types/ToolsTypes"
+import { ACTIVE_CATEGORY, ACTIVE_LOCATION } from "../../Types/CategoriesTypes"
 
-  const [locationState, setlocationState] = useState({
-    name: "",
-    address: "",
-    coordinates: "",
-    category: "",
-  })
+const Locations = () => {
+  const { state, dispatch, toolsState, toolsDispatch } = React.useContext(
+    MainContext
+  )
+  /*  const [activeLocation, setActiveLocation] = useState(-1) */
+  const [active, setactive] = useState(-1)
+
+  /* Locations editor states */
+  const [showAddCatForm, setShowAddCatForm] = useState(false)
+  const [showDelete, setShowDelete] = useState(false)
+  const [showEdit, setShowEhowEdit] = useState(false)
+  const [showModalDelete, setshowModalDelete] = useState(false)
+
   useEffect(() => {
-    console.log(activeCategory)
-    setlocationState(activeLocation)
-    if (activeCategory!=='') {
-      setshowComponent(true)
-    }else{
-      setshowComponent(false)
-    }
-    
-  }, [editMode, activeCategory])
+    console.log(active)
+  }, [state.activeLocation])
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    seteditMode(false)
-    setMessages("Updated successfully!")
-    setShowMsg(true)
-
-    dispatch({ type: UPDATE_LOCATION, payload: locationState })
-    dispatch({ type: RESET })
-    setTimeout(() => {
-      setShowMsg(false)
-      setshowComponent(false)
-    }, 1500)
+  const handleSetActiveLocation = (index) => {
+    /*  setActiveLocation(getCurrentlocation(index)) */
+    toolsDispatch({ type: ACTIVE_LOCATION, payload: getCurrentlocation(index) })
+    setactive(index)
   }
-
-  const handleCancel = (e) => {
-    e.preventDefault()
-    setlocationState(activeLocation)
-
-    seteditMode(false)
-  }
-  const handleChange = (event) => {
-    let value = event.target.value
-    let name = event.target.name
-    console.log(name)
-    console.log(value)
-    //set the state by adding it the current value
-    setlocationState({ ...locationState, [name]: value })
+  function getCurrentlocation(index) {
+    console.log()
+    let tmparr = state.locations.filter(
+      (item) => item.name === state.locations[index].name
+    )
+    //console.log(tmparr[0])
+    return tmparr[0]
   }
   return (
-    <>
-      {showComonent && (
-        <div className="view-edit-wrapper">
-          {!editMode ? (
-            <div className="view-mode-container">
-              <div className="titles">
-                <p>Category:</p>
-                <p>Name:</p>
-                <p>Address:</p>
-                <p>Coordinates:</p>
-              </div>
-              <div className="values">
-                <p>{activeLocation.category}</p>
-                <p>{activeLocation.name}</p>
-                <p>{activeLocation.address}</p>
-                <p>{activeLocation.coordinates}</p>
-              </div>
-            </div>
-          ) : (
-            <div className="edit-mode-container">
-              <div className="titles">
-                <p>Category:</p>
-                <p>Name:</p>
-                <p>Address:</p>
-                <p>Coordinates:</p>
-              </div>
+    <div className="locations-section">
+      <div className="editortool-title">
+        {showEdit && !showAddCatForm && <h6>Editing Tools</h6>}
+        {!showEdit && !showAddCatForm && <h6>Locations</h6>}
+        {showAddCatForm && <h6>Add Category</h6>}
+      </div>
+      <div className="locations-editor-wrapper">
+        <LocationsEditor />
+      </div>
 
-              <div className="values">
-                <form onSubmit={handleSubmit}>
-                  <p className="category-title">{locationState.category}</p>
-                  <p>
-                    <input
-                      type="text"
-                      onChange={handleChange}
-                      value={locationState.name}
-                      name="name"
-                    ></input>
-                  </p>
-                  <p>
-                    <input
-                      type="text"
-                      onChange={handleChange}
-                      value={locationState.address}
-                      name="address"
-                    ></input>
-                  </p>
-                  <p>
-                    <input
-                      type="text"
-                      value={locationState.coordinates}
-                      onChange={handleChange}
-                      name="coordinates"
-                    ></input>
-                  </p>
-                  <div className="btn-wrapper">
-                    <button className="btn-update hvr-bounce-in" type="submit">
-                      Update
-                    </button>
-                    <button className="btn-update hvr-bounce-in" onClick={handleCancel}>
-                      cancel
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          )}
+      <div className="section-2">
+        <div className="locations-list-wrapper ">
+          <ul className="list-group">
+            {state.locations.map((location, index) => (
+              <li
+                className={
+                  index === active
+                    ? "list-group-item location-item-active"
+                    : "list-group-item location-item"
+                }
+                onClick={() => handleSetActiveLocation(index)}
+              >
+                {location.name}
+              </li>
+            ))}
+          </ul>
         </div>
-      )}
-      {showMsg ? (
-        <motion.div
-          className="anim1"
-          animate={{
-            scale: [1, 2, 1, 0],
-            rotate: [0, 0, 270, 0],
-            borderRadius: ["20%", "20%", "50%", "20%"],
-          }}
-          transition={{ ease: "easeOut", duration: 1.8 }}
-        >
-          {messages}
-        </motion.div>
-      ) : null}
-    </>
+        <div className="single-location-wrapper">
+            {state.activeLocation.name && (
+            <Location />           
+          )} 
+        </div>
+      </div>
+    </div>
   )
 }
 

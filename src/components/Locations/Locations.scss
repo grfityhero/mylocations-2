@@ -1,0 +1,28 @@
+@import "../../Colors/ColorSchema.scss";
+.locations-section {
+  width: 100%;
+  
+}
+.section-2{
+  padding: 7px;
+  display: flex;
+}
+.single-location-wrapper {
+  width: 60%;
+  margin-left: 10px;
+  background: $secondary;
+}
+.locations-list-wrapper {
+  width: 30%;
+
+  .location-item {
+    cursor: pointer;
+    background: $secondary;
+  }
+}
+
+.location-item-active {
+  cursor: pointer;
+  background: $primary;
+  color: $white;
+}

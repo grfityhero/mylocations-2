@@ -1,10 +1,10 @@
 @import "../../Colors/ColorSchema.scss";
 
-.editor-section {
+.locations-editor-section {
   position: relative;
 }
-.editor-wrapper {
- /*  height: 40px; */
+.locations-editor-wrapper {
+  /*  height: 40px; */
   margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
@@ -13,7 +13,7 @@
   border-radius: 7px;
   padding: 10px;
 }
-.editor-wrapper-hide {
+.locations-editor-wrapper-hide {
   display: none;
 }
 .add-new-category,
@@ -50,16 +50,14 @@
   background: $secondary;
   color: white;
 }
-.editortool-title {
-  
-  margin:auto auto;
+.locations-editortool-title {
+  margin: auto auto;
   color: $dark;
   text-align: center;
- 
 }
 /* mobile */
 @media (max-width: 600px) {
-  .editor-wrapper {
+  .locations-editor-wrapper {
     padding-left: 9%;
   }
   .tool-title {
@@ -67,8 +65,13 @@
   }
 
   .tool-icon {
-    
+    position: absolute;
     padding: 10px;
+    border-radius: 50%;
+    right: 0px;
+    margin-top: auto;
+    background: $secondary;
+    color: white;
   }
   .toolicon {
     width: 2em !important;
