@@ -1,32 +1,43 @@
-import React, { useState, useRef } from "react"
-import MainContext from "../../context/MainContext"
-import { ADD_CATEGORY_ITEM } from "../../Types/CategoriesTypes"
+import React, { useState, useEffect } from "react"
+import MainContext from "../../../context/MainContext"
+import {
+  ADD_CATEGORY_ITEM,
+  ADD_LOCATION_ITEM,
+} from "../../../Types/CategoriesTypes"
 import "./Addnew.scss"
 import { motion } from "framer-motion"
 
-function Addnew({ showAddCatForm, setShowAddCatForm }) {
-  const inpRef = useRef(null)
-  const { state, dispatch } = React.useContext(MainContext)
-  const [newCatName, setnewCatName] = useState("")
+function Addnew({ setShowAddItemForm }) {
+  const { state, dispatch, toolsState } = React.useContext(MainContext)
+  const [newItemName, setnewItemName] = useState("")
   const [errorText, seterrorText] = useState("")
+  const [entity, setEntity] = useState(toolsState.selectedentity)
+
+  useEffect(() => {
+    setEntity(toolsState.selectedentity)
+  }, [toolsState.selectedentity])
+
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (newItemName) {
+      console.log("toolsState.selectedEntity ", toolsState.selectedentity)
+      toolsState.selectedentity === "categories"
+        ? dispatch({ type: ADD_CATEGORY_ITEM, payload: newItemName })
+        : dispatch({ type: ADD_LOCATION_ITEM, payload: newItemName })
 
-    if (newCatName) {
-      dispatch({ type: ADD_CATEGORY_ITEM, payload: newCatName })
-      setShowAddCatForm(false)
-      setnewCatName("")
+      setShowAddItemForm(false)
+      setnewItemName("")
     } else {
       seterrorText("Nothing has been added.")
       const timer = setTimeout(() => {
         seterrorText("")
 
-        setShowAddCatForm(false)
+        setShowAddItemForm(false)
       }, 1500)
     }
   }
   const handleChange = (e) => {
-    setnewCatName(e.target.value)
+    setnewItemName(e.target.value)
   }
   return (
     <>
@@ -47,11 +58,11 @@ function Addnew({ showAddCatForm, setShowAddCatForm }) {
 
         <form onSubmit={handleSubmit}>
           <input
-            value={newCatName}
+            value={newItemName}
             className="add-input-text"
             type="text"
             onChange={handleChange}
-            placeholder="Enter New Category"
+            placeholder={entity=== "categories" ? "Enter New Category":"Enter New Location"}
           />
 
           <input type="submit" value="Submit" className="submit-button"></input>

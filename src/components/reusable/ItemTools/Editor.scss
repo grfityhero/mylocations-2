@@ -1,10 +1,10 @@
-@import "../../Colors/ColorSchema.scss";
+@import "../../../Colors/ColorSchema.scss";
 
-.locations-editor-section {
+.editor-section {
   position: relative;
 }
-.locations-editor-wrapper {
-  /*  height: 40px; */
+.editor-wrapper {
+ /*  height: 40px; */
   margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
@@ -13,7 +13,7 @@
   border-radius: 7px;
   padding: 10px;
 }
-.locations-editor-wrapper-hide {
+.editor-wrapper-hide {
   display: none;
 }
 .add-new-category,
@@ -50,14 +50,16 @@
   background: $secondary;
   color: white;
 }
-.locations-editortool-title {
-  margin: auto auto;
+.editortool-title {
+  
+  margin:auto auto;
   color: $dark;
   text-align: center;
+ 
 }
 /* mobile */
 @media (max-width: 600px) {
-  .locations-editor-wrapper {
+  .editor-wrapper {
     padding-left: 9%;
   }
   .tool-title {
@@ -65,13 +67,8 @@
   }
 
   .tool-icon {
-    position: absolute;
+    
     padding: 10px;
-    border-radius: 50%;
-    right: 0px;
-    margin-top: auto;
-    background: $secondary;
-    color: white;
   }
   .toolicon {
     width: 2em !important;

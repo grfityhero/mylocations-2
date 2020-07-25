@@ -1,11 +1,11 @@
-@import "../../Colors/ColorSchema.scss";
+@import "../../../Colors/ColorSchema.scss";
 
 .listGroup-wrapper {
   width: 100%;
   padding: 5px;
 }
 
-.category-list {
+.general-list {
   width: 100%;
   margin: auto auto;
 }
@@ -22,5 +22,4 @@
       }
     }
   }
-
 }

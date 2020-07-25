@@ -21,14 +21,7 @@
   width: 35%;
   align-self: start;
 }
-.locations-main-wrapper {
-  padding: 10px;
-  margin-top: 5px;
-  background: $light;
-  border-radius: 6px;
-  background: $light;
-  width: 65%;
-}
+
 @media (max-width: 600px) {
   .categories-editor-formWrapper {
     flex-direction: column;
@@ -39,7 +32,10 @@
     position: relative;
     width: 100%;
   }
-  .locations-main-wrapper {
-    width: 100%;
-  }
+
 }
+
+
+
+
+
