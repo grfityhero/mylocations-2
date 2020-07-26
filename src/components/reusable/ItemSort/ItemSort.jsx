@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react"
+import React, { usState, useEffect } from "react"
+import "./ItemSort.scss"
 
 const ItemSort = ({ sortAsc, setsortAsc }) => {
-  
-    return (
+  return (
     <div>
-      <button 
-      onClick={() => setsortAsc(!sortAsc)} 
-      className="btn-update ">
-        {sortAsc ? "sort descending  ↓" : "Sort ascending  ↑"}
-      </button>
+      <div onClick={() => setsortAsc(!sortAsc)} className="div-sort">
+        {sortAsc ? "↓ Sort" : "↑ Sort"}
+      </div>
     </div>
   )
 }

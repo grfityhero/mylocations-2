@@ -5,7 +5,9 @@ import MainContext from "../../../context/MainContext"
 import { toggleActive } from "./ItemSelectorHelper"
 /* import Category from "./../../Category/Category" */
 import ItemSort from "./../ItemSort/ItemSort"
-import { SORT_ITEMS } from "../../../Types/CategoriesTypes"
+import { SORT_ITEMS, GROUP_ITEMS, RESET } from "../../../Types/CategoriesTypes"
+import { EDIT_MODE } from "../../../Types/ToolsTypes"
+import GroupByCategory from "./../ItemGroup/GroupByCategory"
 function ItemSelector() {
   //deconstruct from MainContext
   const { state, dispatch, toolsDispatch, toolsState } = React.useContext(
@@ -16,7 +18,17 @@ function ItemSelector() {
 
   //sort data or not
   const [sortAsc, setsortAsc] = useState(true)
+  const [groupByCategory, setGroupByCategory] = useState(false)
 
+  useEffect(() => {
+    if (groupByCategory) {
+      dispatch({ type: GROUP_ITEMS }) /* group locations by category */
+    } else {
+      dispatch({ type: SORT_ITEMS, payload: "ASC" })
+    }
+  }, [groupByCategory])
+
+  /* sort ,group,effect */
   useEffect(() => {
     sortAsc
       ? dispatch({ type: SORT_ITEMS, payload: "ASC" })
@@ -44,15 +56,24 @@ function ItemSelector() {
   const callToggle = (index) => {
     toggleActive(index, state, toolsState, dispatch, toolsDispatch)
     //console.log(state.activeLocation)
-    
+    toolsDispatch({
+      type: EDIT_MODE,
+      payload: false,
+    })
   }
 
   return (
     <div className="listGroup-wrapper">
       {entity ? (
         <ul className="list-group general-list">
-         {/*  <ItemSort sortAsc={sortAsc} setsortAsc={setsortAsc} />
- */}
+          <ItemSort sortAsc={sortAsc} setsortAsc={setsortAsc} />
+         
+         {toolsState.selectedentity !== "categories" &&
+          <GroupByCategory
+            groupByCategory={groupByCategory}
+            setGroupByCategory={setGroupByCategory}
+          />}
+
           {entity.map((catItem, index) => (
             <Item
               index={index}

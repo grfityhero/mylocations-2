@@ -6,10 +6,13 @@ import {
   DELETE_LOCATION_ITEM,
   RESET,
   UPDATE_LOCATION,
+  UPDATE_CATEGORY,
   ACTIVE_CATEGORY,
   ACTIVE_LOCATION,
   SORT_ITEMS,
+  GROUP_ITEMS,
 } from "../Types/CategoriesTypes"
+import _ from "lodash"
 
 export const reducer = (state, action) => {
   switch (action.type) {
@@ -36,13 +39,11 @@ export const reducer = (state, action) => {
         JSON.stringify({
           ...state,
           categories: [...state.categories, { name: action.payload }],
-        
         })
       )
       return {
         ...state,
         categories: [...state.categories, { name: action.payload }],
-       
       }
     }
     case ADD_LOCATION_ITEM: {
@@ -159,10 +160,54 @@ export const reducer = (state, action) => {
         categories: [...state.categories],
 
         locations: [
-          ...state.locations.filter(
-            (itm) => itm.name !== action.payload.name
-          ),
+          ...state.locations.filter((itm) => itm.name !== action.payload.name),
           action.payload,
+        ],
+      }
+    }
+
+    /*UPDATE_CATEGORY adding a location object from payload  */
+    case UPDATE_CATEGORY: {
+      console.log("reducer UPDATE_CATEGORY with payload: ", action.payload)
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          locations: [
+            ...state.locations.map((itm) => {
+              if (itm.category === action.payload.oldName) {
+                itm.category = action.payload.newName
+              } else {
+                return itm
+              }
+            }),
+          ],
+
+          categories: [
+            ...state.categories.filter(
+              (itm) => itm.name !== action.payload.oldName
+            ),
+            { name: action.payload.newName },
+          ],
+        })
+      )
+
+      return {
+        ...state,
+        locations: [
+          ...state.locations.map((itm) => {
+            if (itm.category === action.payload.oldName) {
+              itm.category = action.payload.newName
+            } else {
+              return itm
+            }
+          }),
+        ],
+        categories: [
+          ...state.categories.filter(
+            (itm) => itm.name !== action.payload.oldName
+          ),
+          { name: action.payload.newName },
         ],
       }
     }
@@ -177,11 +222,13 @@ export const reducer = (state, action) => {
     }
 
     case SORT_ITEMS: {
-     
-      if (action.payload === 'ASC') {
-       
-        let sortredCategories = state.categories.sort((a, b) => (a.name > b.name) ? 1 : -1)
-        let sortredCLocations = state.locations.sort((a, b) => (a.name > b.name) ? 1 : -1)
+      if (action.payload === "ASC") {
+        let sortredCategories = state.categories.sort((a, b) =>
+          a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
+        )
+        let sortredCLocations = state.locations.sort((a, b) =>
+          a.name > b.name ? 1 : -1
+        )
 
         localStorage.setItem(
           "state",
@@ -192,7 +239,7 @@ export const reducer = (state, action) => {
             locations: [...sortredCLocations],
           })
         )
-       
+
         return {
           ...state,
           categories: [...sortredCategories],
@@ -200,20 +247,18 @@ export const reducer = (state, action) => {
           locations: [...sortredCLocations],
         }
       } else {
-
-       
         let sortredCategories = state.categories.reverse()
         let sortredCLocations = state.locations.reverse()
         localStorage.setItem(
           "state",
           JSON.stringify({
             ...state,
-          categories: [...sortredCategories],
+            categories: [...sortredCategories],
 
-          locations: [...sortredCLocations],
+            locations: [...sortredCLocations],
           })
         )
-       
+
         return {
           ...state,
           categories: [...sortredCategories],
@@ -221,6 +266,36 @@ export const reducer = (state, action) => {
           locations: [...sortredCLocations],
         }
       }
+    }
+    case GROUP_ITEMS: {
+    
+      let groupedLocations =[]
+
+      let groupedLocationsTmp = _.groupBy(state.locations, (itm) => {
+        return itm.category === itm.category ? itm.category : "single"
+      })
+  
+    _.forEach(groupedLocationsTmp, function(value, key) {
+      groupedLocations.push(...value)
+      
+    });
+console.log(groupedLocations);
+     localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          categories: [...state.categories],
+
+          locations: groupedLocations,
+        })
+      )
+
+      return {
+        ...state,
+        categories: [...state.categories],
+
+        locations: groupedLocations,
+      } 
     }
     default:
       return state

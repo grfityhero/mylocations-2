@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react"
 import MainContext from "../../../context/MainContext"
-
+import "./ItemInfoViewer.scss"
 function ItemInfoViewer() {
   const { state, toolsState } = React.useContext(MainContext)
   const [entity, setentity] = useState([])
-  const [activeItem, setactiveItem] = useState([])
+
   const [itmIndex, setitmIndex] = useState(0)
   const [groupedLocation, setGroupedLocation] = useState([])
 
@@ -12,19 +12,27 @@ function ItemInfoViewer() {
     /* Categories */
     if (toolsState.selectedentity === "categories") {
       setentity(state.categories)
+
       let arr = state.locations.filter(
         (item) => item.category === state.activeCategory
       )
-      /* if more then one location assigned to this category */
-      if (arr.length > 0) {
+      /* if more then one location present-
+      assign the filtered locations array to current category */
+      if (arr.length > 1) {
         setGroupedLocation(arr)
       } else {
+        /* Back to single location in array so set index to zero */
+        setitmIndex(0)
         setGroupedLocation(arr)
       }
     } else {
       /* Locations */
-      setentity(state.locations)
-      setactiveItem(state.activeLocation)
+      let arr = state.locations.filter(
+        (item) => item.name === state.activeLocation.name
+      )
+      setGroupedLocation(arr)
+      setentity(arr)
+
     }
   }, [
     toolsState.selectedentity,
@@ -32,22 +40,24 @@ function ItemInfoViewer() {
     state.activeLocation,
     itmIndex,
   ])
+  useEffect(() => {
+    /* resete item index each time the active category change. */
+    setitmIndex(0)
+  }, [state.activeCategory])
 
   const handleNextLocation = () => {
     if (groupedLocation.length > 1 && itmIndex < groupedLocation.length - 1) {
       setitmIndex(itmIndex + 1)
-      setactiveItem(groupedLocation[itmIndex])
     } else {
       console.log("NO")
     }
     console.log(groupedLocation.length)
-    console.log(itmIndex)
+   // console.log(itmIndex)
   }
 
   const handlePrevLocation = () => {
     if (groupedLocation.length > 1 && !itmIndex < 1) {
       setitmIndex(itmIndex - 1)
-      setactiveItem(groupedLocation[itmIndex])
     } else {
       console.log("NO")
     }
@@ -57,27 +67,34 @@ function ItemInfoViewer() {
 
   return (
     <>
-      <div className="buttons-next-prev-wrapper ">
-        <button
-          disabled={groupedLocation.length === 1 || itmIndex === 0}
-          onClick={handlePrevLocation}
-          className="btn btn-primary"
-        >
-          <i class="fa fa-step-backward" aria-hidden="true"></i>
-        </button>
+      {toolsState.selectedentity === "categories" && (
+        <div className="buttons-next-prev-wrapper ">
+          <button
+            className="btn-next-prev hvr-bounce-in"
+            disabled={groupedLocation.length === 1 || itmIndex === 0}
+            onClick={handlePrevLocation}
+          >
+            <i
+              className="fa fa-step-backward icons-prev-next"
+              aria-hidden="true"
+            ></i>
+          </button>
 
-        <button
-          disabled={
-            groupedLocation.length === 1 ||
-            itmIndex === groupedLocation.length - 1
-          }
-          onClick={handleNextLocation}
-          className="btn btn-primary"
-        >
-          <i class="fa fa-step-forward" aria-hidden="true"></i>
-        </button>
-      </div>
-
+          <button
+            className="btn-next-prev hvr-bounce-in"
+            disabled={
+              groupedLocation.length === 0 ||
+              itmIndex === groupedLocation.length - 1
+            }
+            onClick={handleNextLocation}
+          >
+            <i
+              className="fa fa-step-forward icons-prev-next"
+              aria-hidden="true"
+            ></i>
+          </button>
+        </div>
+      )}
       <div className="view-mode-container">
         <div className="titles">
           <p>Category:</p>
@@ -87,7 +104,6 @@ function ItemInfoViewer() {
         </div>
 
         {groupedLocation.length > 0 ? (
-          /*  activeItem.map((item) => ( )) */
           <div className="values">
             <p>{groupedLocation[itmIndex].category}</p>
             <p>{groupedLocation[itmIndex].name}</p>

@@ -1,62 +1,28 @@
-@import "../../Colors/ColorSchema.scss";
-.list-location {
-  list-style: none;
+@import "../../../Colors/ColorSchema.scss";
+
+.buttons-next-prev-wrapper {
+  width: 100%;
+  background: $dark;
+  text-align: center;
 }
-
-.view-mode-container {
-  display: flex;
-
-  .titles {
-    width: 30%;
-    > p {
-      padding: 5px;
-      border-bottom: 2px solid rgba(255, 255, 255, 0.349);
-    }
+.btn-next-prev {
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+  cursor: pointer;
+  color:white;
+  background: transparent ;
+  border:none;
+ 
+   .icons-prev-next {
+   /*  color: $white; */
   }
-  .values {
-    width: 70%;
-    > p {
-      padding: 5px;
-      border-bottom: 2px solid rgba(255, 255, 255, 0.349);
-    }
-  }
+
 }
-
-.edit-mode-container {
-  display: flex;
-  .titles {
-    width: 30%;
-    margin-right: 15px;
-    margin-top: 5px;
-    padding: 5px;
-  }
-  .values {
-    padding: 3px;
-    width: 70%;
-  }
-  .btn-wrapper {
-    width: 100%;
-  }
-  .btn-update {
-    padding: 7px;
-    border: 1px solid white;
-    margin: 7px;
-    border-radius: 5px;
-    background: $dark;
-    color: white;
-    min-width: 89px;
-  }
-  input {
-    padding-left: 10px;
-    width: 90%;
-    border: none;
-    border-bottom: 2px solid #c300ff;
-  }
-  .category-title {
-    padding-left: 10px;
-    width: 90%;
-    border: none;
-    border-bottom: 2px solid #c300ff;
-    background: $morelight;
-  }
+.btn-next-prev:disabled{
+cursor: not-allowed;
+}
+:disabled {
+  background-color:transparent!important;
+  color: rgb(119, 76, 122)!important;
+  border: none;
 }

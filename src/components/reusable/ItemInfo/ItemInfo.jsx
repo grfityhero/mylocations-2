@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react"
 import MainContext from "../../../context/MainContext"
 import "./ItemInfo.scss"
-import { UPDATE_LOCATION, RESET } from "../../../Types/CategoriesTypes"
+import {
+  UPDATE_LOCATION,
+  UPDATE_CATEGORY,
+  RESET,
+} from "../../../Types/CategoriesTypes"
 import { motion } from "framer-motion"
 import "../../../styles/hover.css"
 import { EDIT_MODE } from "../../../Types/ToolsTypes"
@@ -15,7 +19,6 @@ function ItemInfo() {
   const [messages, setMessages] = useState("")
   const [showMsg, setShowMsg] = useState(false)
   const [showComponent, setShowComponent] = useState(true)
-
 
   /* Create an object to store a location object */
   const [locationStateObj, setlocationStateObj] = useState({
@@ -54,19 +57,30 @@ function ItemInfo() {
     }
   }, [toolsState.editMode, state.activeCategory, state.activeLocation])
 
-
   /* submit updates to item */
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("submiting ")
-  
+
     toolsDispatch({
       type: EDIT_MODE,
       payload: false,
     })
-   
 
-    dispatch({ type: UPDATE_LOCATION, payload: locationStateObj })
+    /* update category name */
+    if (toolsState.selectedentity === "categories") {
+      dispatch({
+        type: UPDATE_CATEGORY,
+        payload: {
+          oldName: state.activeCategory,
+          newName: locationStateObj.category,
+        },
+      })
+      console.log(state.activeCategory, locationStateObj)
+    } else {
+      dispatch({ type: UPDATE_LOCATION, payload: locationStateObj })
+    }
+
     dispatch({ type: RESET })
     setMessages("Updated successfully!")
     setShowMsg(true)
@@ -88,7 +102,7 @@ function ItemInfo() {
   const handleChange = (event) => {
     let value = event.target.value
     let name = event.target.name
-    setlocationStateObj({...locationStateObj,[name]:value})
+    setlocationStateObj({ ...locationStateObj, [name]: value })
   }
   return (
     <>
@@ -97,7 +111,7 @@ function ItemInfo() {
           {!toolsState.editMode ? (
             <ItemInfoViewer />
           ) : (
-            <ItemInfoEditor     
+            <ItemInfoEditor
               setlocationStateObj={setlocationStateObj}
               locationStateObj={locationStateObj}
               handleSubmit={handleSubmit}

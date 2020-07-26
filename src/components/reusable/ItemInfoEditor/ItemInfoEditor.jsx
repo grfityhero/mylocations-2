@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react"
 import Select from "react-select"
 import MainContext from "../../../context/MainContext"
+import "./ItemInfoEditor.scss"
 
-function ItemInfoEditor({
+const ItemInfoEditor = ({
   locationStateObj,
   setlocationStateObj,
   handleSubmit,
   handleChange,
   handleCancel,
-}) {
+}) => {
   const [dropOptions, setDropOptions] = useState([])
-  const { state ,toolsState} = React.useContext(MainContext)
+  const [defVal, setDefVal] = useState({})
+  const { state, toolsState } = React.useContext(MainContext)
 
   useEffect(() => {
     let tmpArr = []
@@ -18,9 +20,15 @@ function ItemInfoEditor({
       tmpArr.push({ value: category.name, label: category.name })
     })
     setDropOptions(tmpArr)
-  }, [state.activeLocation])
+    setDefVal({
+      value: state.activeLocation.category,
+      label: state.activeLocation.category,
+    })
+  }, [state.activeLocation, toolsState.showEditor])
 
   const handleChangeOption = (selectedOption) => {
+    console.log(selectedOption)
+    setDefVal(selectedOption)
     setlocationStateObj({ ...locationStateObj, category: selectedOption.value })
   }
   return (
@@ -36,15 +44,17 @@ function ItemInfoEditor({
         <form onSubmit={handleSubmit}>
           <div className="category-title">
             {toolsState.selectedentity === "locations" ? (
-              <Select
-                onChange={handleChangeOption}
-                defaultInputValue="Assign a Category"
-                options={dropOptions}
-              />
+              <>
+                <Select
+                  value={defVal}
+                  className="categories-select"
+                  onChange={handleChangeOption}
+                  options={dropOptions}
+                />
+              </>
             ) : (
               <p>
                 <input
-                  disabled
                   type="text"
                   onChange={handleChange}
                   value={locationStateObj.category}
@@ -52,27 +62,11 @@ function ItemInfoEditor({
                 ></input>
               </p>
             )}
-
-            {/*   {locationStateObj.category === "Unassigned Category" ? (
-              <Select
-                onChange={handleChangeSelect}
-                defaultInputValue="Assign a Category"
-                options={dropOptions}
-              />
-            ) : (
-              locationStateObj.category
-            )} */}
-            {/*  <select onChange={handleChangeOption}>
-              {state.categories.map((category) => (
-                <option key={category.name} value={category.name}>
-                  {category.name}
-                </option>
-              ))}
-            </select> */}
           </div>
 
           <p>
             <input
+              disabled={toolsState.selectedentity === "categories"}
               type="text"
               onChange={handleChange}
               value={locationStateObj.name}
@@ -81,6 +75,7 @@ function ItemInfoEditor({
           </p>
           <p>
             <input
+              disabled={toolsState.selectedentity === "categories"}
               type="text"
               onChange={handleChange}
               value={locationStateObj.address}
@@ -89,6 +84,7 @@ function ItemInfoEditor({
           </p>
           <p>
             <input
+              disabled={toolsState.selectedentity === "categories"}
               type="text"
               value={locationStateObj.coordinates}
               onChange={handleChange}
