@@ -40,6 +40,7 @@ function ItemSelector({setitmIndex}) {
      
       setentity(state.categories)
       setactiveItem(state.activeCategory)
+      
     } else {
       setentity(state.locations)
       setactiveItem(state.activeLocation)

@@ -18,12 +18,12 @@ function MapMain({ itmIndex }) {
         case "categories":
           if (location.category === state.activeCategory) {
             newPosition = [location.coordinatesLat, location.coordinatesLong]
-
-            coordArr.push(newPosition)
+            newPosition[0] && newPosition[1] && 
+             /* Push newPositions to array */
+            coordArr.push(newPosition)        
             locArr.push(location.name)
-
-            /*  newPosition[0] && newPosition[1] && */
           }
+
         case "locations":
           if (location.name === state.activeLocation.name) {
             newPosition = [location.coordinatesLat, location.coordinatesLong]
@@ -58,7 +58,7 @@ function MapMain({ itmIndex }) {
   }
   return (
     <div className="map-wrapper">
-      Here - {position}
+     {position &&
       <Map onClick={handleMapClick} center={position} zoom={12}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -80,7 +80,8 @@ function MapMain({ itmIndex }) {
           </Popup>
         </Marker>
       </Map>
-    </div>
+}
+   </div>
   )
 }
 
