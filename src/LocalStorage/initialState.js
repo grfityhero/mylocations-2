@@ -9,18 +9,21 @@ if (storageState) {
       {
         name: "Location-1",
         address: "addr-1",
-        coordinates: [53.324311, -7.899169],
+        coordinatesLat: 53.324311,
+        coordinatesLong: -7.899169,
         category: "category-1",
       },
       {
         name: "Location-2",
         address: "addr-2",
-        coordinates: [32.182005, 34.867858],
+        coordinatesLat: 32.182005,
+        coordinatesLong: 34.867858,
         category: "category-2",
       },
     ],
     activeCategory: "",
     activeLocation: "",
+    coordsFromMap:[]
   }
 }
 export default initialState

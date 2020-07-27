@@ -10,7 +10,8 @@ export function toggleActive(
   state,
   toolsState,
   dispatch,
-  toolsDispatch
+  toolsDispatch,
+ 
 ) {
   let entity
   toolsState.selectedentity === "categories"
@@ -26,7 +27,7 @@ export function toggleActive(
     dispatch({ type: RESET })
   } else {
     /* set selected and corresponding data */
-
+   
     if (toolsState.selectedentity === "categories") {
       dispatch({
         type: ACTIVE_CATEGORY,

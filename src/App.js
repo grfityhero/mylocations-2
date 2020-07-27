@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react"
+import React, { useState, useReducer,useEffect} from "react"
 import "./App.scss"
 import Navbar from "./components/Navbar/Navbar"
 
@@ -15,7 +15,8 @@ import { toolsReducer } from "./reducers/toolsReducer"
 import initialState from "./LocalStorage/initialState.js"
 import toolsInitialState from "./LocalStorage/toolsInitialState.js"
 import ItemSelector from "./components/reusable/ItemSelector/ItemSelector"
-import ItemInfo from './components/reusable/ItemInfo/ItemInfo';
+import ItemInfo from "./components/reusable/ItemInfo/ItemInfo"
+import MapMain from "./components/reusable/Map/MapMain"
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState)
@@ -23,33 +24,35 @@ function App() {
     toolsReducer,
     toolsInitialState
   )
+  const [itmIndex, setitmIndex] = useState(0)
+useEffect(() => {
+ //console.log(state.locations);
+  /* rerender */
+}, [state.locations])
 
   return (
     <MainContext.Provider
-      value={{ state, dispatch, toolsState, toolsDispatch }}>
-    
+      value={{ state, dispatch, toolsState, toolsDispatch }}
+    >
       <div className="App">
         <Navbar />
-  
-        
-          
-          <div className="entity-wrapper container rounded shadow ">
-            <div className="editor-component-wrapper">
-               <Editor />
+
+        <div className="entity-wrapper container rounded shadow ">
+          <div className="editor-component-wrapper">
+            <Editor />
+          </div>
+          <div className="categories-editor-formWrapper">
+            <div className="categories-wrapper-main">
+              <ItemSelector setitmIndex={setitmIndex} />
             </div>
-            <div className="categories-editor-formWrapper">
-              <div className="categories-wrapper-main">
-                {/*  <Categories /> */}
-                <ItemSelector />
-              </div>
-              <div className="CatInfo-main-wrapper">
-               {/*  <CatInfo />  */}
-               <ItemInfo/> 
+            <div className="CatInfo-main-wrapper">
+              <ItemInfo setitmIndex={setitmIndex} itmIndex={itmIndex} />
+              <div className="map-main-wrapper">
+                <MapMain setitmIndex={setitmIndex} itmIndex={itmIndex} />
               </div>
             </div>
           </div>
-       
-       
+        </div>
 
         <div className="bottombar-component-wrapper">
           <Bottombar />

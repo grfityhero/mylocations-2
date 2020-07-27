@@ -11,6 +11,7 @@ import {
   ACTIVE_LOCATION,
   SORT_ITEMS,
   GROUP_ITEMS,
+  COORDS_FROM_MAP,
 } from "../Types/CategoriesTypes"
 import _ from "lodash"
 
@@ -25,7 +26,7 @@ export const reducer = (state, action) => {
       return { ...state, activeCategory: action.payload }
     }
     case ACTIVE_LOCATION: {
-      // console.log("setting active location")
+      
       localStorage.setItem(
         "state",
         JSON.stringify({ ...state, activeLocation: action.payload })
@@ -58,7 +59,8 @@ export const reducer = (state, action) => {
             {
               name: action.payload,
               address: "none",
-              coordinates: "none",
+              coordinatesLat: null,
+              coordinatesLong: null,
               category: "Unassigned Category",
             },
           ],
@@ -72,7 +74,8 @@ export const reducer = (state, action) => {
           {
             name: action.payload,
             address: "none",
-            coordinates: "none",
+            coordinatesLat: null,
+            coordinatesLong: null,
             category: "Unassigned Category",
           },
         ],
@@ -108,13 +111,6 @@ export const reducer = (state, action) => {
             ...state.locations.filter(
               (item) => item.name !== state.activeLocation.name
             ),
-
-            /*   {
-              name: "Unnamed Location",
-              address: null,
-              coordinates: null,
-              category: "Unassigned Category",
-            }, */
           ],
         })
       )
@@ -126,20 +122,13 @@ export const reducer = (state, action) => {
           ...state.locations.filter(
             (item) => item.name !== state.activeLocation.name
           ),
-
-          /*    {
-            name: "Unnamed Location",
-            address: null,
-            coordinates: null,
-            category: "Unassigned Category",
-          }, */
         ],
       }
     }
 
-    /*UPDATE_LOCATION adding a location object from payload  */
+    /*UPDATE_LOCATION UPDATE a location object from payload  */
     case UPDATE_LOCATION: {
-      console.log("reducer is updating with payload: ", action.payload)
+      console.log("reducer UPDATE_LOCATION: ", action.payload)
       localStorage.setItem(
         "state",
         JSON.stringify({
@@ -160,7 +149,8 @@ export const reducer = (state, action) => {
         categories: [...state.categories],
 
         locations: [
-          ...state.locations.filter((itm) => itm.name !== action.payload.name),
+          ...state.locations.filter(
+            (itm) => itm.name !== action.payload.name),
           action.payload,
         ],
       }
@@ -213,7 +203,7 @@ export const reducer = (state, action) => {
     }
 
     case RESET: {
-      console.log("reseting")
+      // console.log("reseting")
       localStorage.setItem(
         "state",
         JSON.stringify({ ...state, activeCategory: "", activeLocation: "" })
@@ -268,19 +258,17 @@ export const reducer = (state, action) => {
       }
     }
     case GROUP_ITEMS: {
-    
-      let groupedLocations =[]
+      let groupedLocations = []
 
       let groupedLocationsTmp = _.groupBy(state.locations, (itm) => {
         return itm.category === itm.category ? itm.category : "single"
       })
-  
-    _.forEach(groupedLocationsTmp, function(value, key) {
-      groupedLocations.push(...value)
-      
-    });
-console.log(groupedLocations);
-     localStorage.setItem(
+
+      _.forEach(groupedLocationsTmp, function (value, key) {
+        groupedLocations.push(...value)
+      })
+
+      localStorage.setItem(
         "state",
         JSON.stringify({
           ...state,
@@ -295,8 +283,24 @@ console.log(groupedLocations);
         categories: [...state.categories],
 
         locations: groupedLocations,
-      } 
+      }
     }
+    case COORDS_FROM_MAP: {
+      // console.log("setting coordss from map " ,action.payload)
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          coordsFromMap: action.payload,
+        })
+      )
+
+      return {
+        ...state,
+        coordsFromMap: action.payload,
+      }
+    }
+
     default:
       return state
   }

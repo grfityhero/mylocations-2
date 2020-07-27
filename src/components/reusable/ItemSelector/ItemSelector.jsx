@@ -8,7 +8,7 @@ import ItemSort from "./../ItemSort/ItemSort"
 import { SORT_ITEMS, GROUP_ITEMS, RESET } from "../../../Types/CategoriesTypes"
 import { EDIT_MODE } from "../../../Types/ToolsTypes"
 import GroupByCategory from "./../ItemGroup/GroupByCategory"
-function ItemSelector() {
+function ItemSelector({setitmIndex}) {
   //deconstruct from MainContext
   const { state, dispatch, toolsDispatch, toolsState } = React.useContext(
     MainContext
@@ -37,13 +37,15 @@ function ItemSelector() {
 
   useEffect(() => {
     if (toolsState.selectedentity === "categories") {
+     
       setentity(state.categories)
       setactiveItem(state.activeCategory)
     } else {
       setentity(state.locations)
       setactiveItem(state.activeLocation)
+      
     }
-    // sortItems()
+   
   }, [
     toolsState.selectedentity,
     state.categories,
@@ -54,6 +56,8 @@ function ItemSelector() {
   ])
 
   const callToggle = (index) => {
+    setitmIndex(0) /* reset index if moved to other item which might have an index of 0 */
+    
     toggleActive(index, state, toolsState, dispatch, toolsDispatch)
     //console.log(state.activeLocation)
     toolsDispatch({

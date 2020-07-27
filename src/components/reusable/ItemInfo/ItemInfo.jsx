@@ -4,7 +4,9 @@ import "./ItemInfo.scss"
 import {
   UPDATE_LOCATION,
   UPDATE_CATEGORY,
+  ACTIVE_LOCATION,
   RESET,
+  SORT_ITEMS,
 } from "../../../Types/CategoriesTypes"
 import { motion } from "framer-motion"
 import "../../../styles/hover.css"
@@ -12,7 +14,7 @@ import { EDIT_MODE } from "../../../Types/ToolsTypes"
 import ItemInfoViewer from "../ItemInfoEditor/ItemInfoViewer"
 import ItemInfoEditor from "../ItemInfoEditor/ItemInfoEditor"
 
-function ItemInfo() {
+function ItemInfo({ setitmIndex, itmIndex }) {
   const { state, dispatch, toolsState, toolsDispatch } = React.useContext(
     MainContext
   )
@@ -20,11 +22,12 @@ function ItemInfo() {
   const [showMsg, setShowMsg] = useState(false)
   const [showComponent, setShowComponent] = useState(true)
 
-  /* Create an object to store a location object */
+  /* Create an empty object to store a location  */
   const [locationStateObj, setlocationStateObj] = useState({
     name: "",
     address: "",
-    coordinates: "",
+    coordinatesLat: null,
+    coordinatesLong: null,
     category: "",
   })
 
@@ -37,30 +40,28 @@ function ItemInfo() {
         (item) => item.category === state.activeCategory
       )
       if (tmpArr.length > 0) {
-        setlocationStateObj(tmpArr[0])
-      } else {
-        setlocationStateObj({
-          name: "",
-          address: "",
-          coordinates: "",
-          category: state.activeCategory,
-        })
+        setlocationStateObj(tmpArr[0])  
       }
+
     } else {
+      /* locations */
       entity = state.locations
-      setlocationStateObj(state.activeLocation)
+      setlocationStateObj({
+        ...state.activeLocation,
+        coordinatesLat: null,
+        coordinatesLong: null,
+      })
     }
     if (state.activeCategory || state.activeLocation !== "") {
       setShowComponent(true)
     } else {
       setShowComponent(false)
     }
-  }, [toolsState.editMode, state.activeCategory, state.activeLocation])
+  }, [toolsState.editMode, state.activeCategory, state.activeLocation,toolsState.selectedentity])
 
   /* submit updates to item */
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log("submiting ")
 
     toolsDispatch({
       type: EDIT_MODE,
@@ -78,10 +79,20 @@ function ItemInfo() {
       })
       console.log(state.activeCategory, locationStateObj)
     } else {
-      dispatch({ type: UPDATE_LOCATION, payload: locationStateObj })
-    }
+      console.log("SUBMIT: ", state.activeLocation)
+      /* update location object first */
+      let locationPayLoad = {
+        ...locationStateObj,
+        coordinatesLat: state.coordsFromMap[0],
+        coordinatesLong: state.coordsFromMap[1],
+      }
 
+      /* update location state */
+      dispatch({ type: UPDATE_LOCATION, payload: locationPayLoad })
+      dispatch({ type: ACTIVE_LOCATION, payload: locationPayLoad })
+    }
     dispatch({ type: RESET })
+   /*  dispatch({ type: SORT_ITEMS, payload: "ASC" }) */
     setMessages("Updated successfully!")
     setShowMsg(true)
     setTimeout(() => {
@@ -99,17 +110,23 @@ function ItemInfo() {
     })
     /*  seteditMode(false) */
   }
-  const handleChange = (event) => {
-    let value = event.target.value
-    let name = event.target.name
-    setlocationStateObj({ ...locationStateObj, [name]: value })
+  const handleChange = (e) => {
+    console.log("handleChange fires")
+    e.preventDefault()
+    let value = e.target.value
+    let name = e.target.name
+    console.log("value: ", value)
+    console.log("name: ", name)
+    /* update a location object first */
+    let tmpLocation = { ...state.activeLocation, [name]: value }
+    setlocationStateObj(tmpLocation)
   }
   return (
     <>
       {showComponent && (
         <div className="view-edit-wrapper">
           {!toolsState.editMode ? (
-            <ItemInfoViewer />
+            <ItemInfoViewer setitmIndex={setitmIndex} itmIndex={itmIndex} />
           ) : (
             <ItemInfoEditor
               setlocationStateObj={setlocationStateObj}

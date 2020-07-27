@@ -10,21 +10,28 @@ const ItemInfoEditor = ({
   handleChange,
   handleCancel,
 }) => {
+  /*select element options */
   const [dropOptions, setDropOptions] = useState([])
+  /*select element Default value */
   const [defVal, setDefVal] = useState({})
   const { state, toolsState } = React.useContext(MainContext)
 
   useEffect(() => {
+    /*Fill the select element */
     let tmpArr = []
     state.categories.map((category) => {
       tmpArr.push({ value: category.name, label: category.name })
     })
     setDropOptions(tmpArr)
+
+    /*Set the select element's default value */
     setDefVal({
-      value: state.activeLocation.category,
-      label: state.activeLocation.category,
+      value: locationStateObj.category,
+      label: locationStateObj.category,
     })
-  }, [state.activeLocation, toolsState.showEditor])
+
+    console.log('#InfoEditor -refreshed locationStateObj:' ,locationStateObj)
+  }, [state.activeLocation, toolsState.showEditor, locationStateObj])
 
   const handleChangeOption = (selectedOption) => {
     console.log(selectedOption)
@@ -57,7 +64,7 @@ const ItemInfoEditor = ({
                 <input
                   type="text"
                   onChange={handleChange}
-                  value={locationStateObj.category}
+                  value={state.activeLocation.category}
                   name="category"
                 ></input>
               </p>
@@ -82,13 +89,29 @@ const ItemInfoEditor = ({
               name="address"
             ></input>
           </p>
+
           <p>
             <input
               disabled={toolsState.selectedentity === "categories"}
               type="text"
-              value={locationStateObj.coordinates}
+              value={
+                state.coordsFromMap[0]
+                  ? state.coordsFromMap[0]
+                  : locationStateObj.coordinatesLat
+              }
               onChange={handleChange}
-              name="coordinates"
+              name="coordinatesLat"
+            ></input>
+            <input
+              disabled={toolsState.selectedentity === "categories"}
+              type="text"
+              value={
+                state.coordsFromMap[1]
+                  ? state.coordsFromMap[1]
+                  : locationStateObj.coordinatesLong
+              }
+              onChange={handleChange}
+              name="coordinatesLong"
             ></input>
           </p>
           <div className="btn-wrapper">

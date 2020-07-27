@@ -9,6 +9,7 @@
   margin-top: 50px;
   background: $morelight;
   padding: 7px;
+ 
 }
 
 .categories-editor-formWrapper {
@@ -20,6 +21,12 @@
 .categories-wrapper-main {
   width: 35%;
   align-self: start;
+}
+.map-main-wrapper{
+
+
+    width:100%;
+    height:  300px; 
 }
 
 @media (max-width: 600px) {

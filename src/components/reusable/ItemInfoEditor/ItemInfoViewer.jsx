@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react"
 import MainContext from "../../../context/MainContext"
 import "./ItemInfoViewer.scss"
-function ItemInfoViewer() {
+
+
+
+function ItemInfoViewer({setitmIndex,itmIndex}) {
   const { state, toolsState } = React.useContext(MainContext)
   const [entity, setentity] = useState([])
 
-  const [itmIndex, setitmIndex] = useState(0)
+ 
   const [groupedLocation, setGroupedLocation] = useState([])
 
   useEffect(() => {
@@ -51,7 +54,7 @@ function ItemInfoViewer() {
     } else {
       console.log("NO")
     }
-    console.log(groupedLocation.length)
+    
    // console.log(itmIndex)
   }
 
@@ -61,8 +64,8 @@ function ItemInfoViewer() {
     } else {
       console.log("NO")
     }
-    console.log(groupedLocation.length)
-    console.log(itmIndex)
+  /*   console.log(groupedLocation.length)
+    console.log(itmIndex) */
   }
 
   return (
@@ -108,7 +111,8 @@ function ItemInfoViewer() {
             <p>{groupedLocation[itmIndex].category}</p>
             <p>{groupedLocation[itmIndex].name}</p>
             <p>{groupedLocation[itmIndex].address}</p>
-            <p>{groupedLocation[itmIndex].coordinates}</p>
+            <p>{groupedLocation[itmIndex].coordinatesLat}</p>
+            <p>{groupedLocation[itmIndex].coordinatesLong}</p>
           </div>
         ) : (
           <div className="values">
