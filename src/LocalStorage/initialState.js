@@ -23,7 +23,8 @@ if (storageState) {
     ],
     activeCategory: "",
     activeLocation: "",
-    coordsFromMap:[]
+    coordsFromMap: [],
+   
   }
 }
 export default initialState

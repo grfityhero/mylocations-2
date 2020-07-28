@@ -5,7 +5,7 @@ const ItemSort = ({ sortAsc, setsortAsc }) => {
   return (
     <div>
       <div onClick={() => setsortAsc(!sortAsc)} className="div-sort">
-        {sortAsc ? "↓ Sort" : "↑ Sort"}
+        {sortAsc ? "Sort ↓" : "Sort ↑"}
       </div>
     </div>
   )

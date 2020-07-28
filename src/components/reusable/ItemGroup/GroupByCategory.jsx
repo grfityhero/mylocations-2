@@ -9,13 +9,13 @@ function GroupByCategory({ setGroupByCategory, groupByCategory }) {
         className="div-group"
       >
         {groupByCategory ? (
-          <div className="">
-            <i className="fa fa-check" aria-hidden="true"></i>&nbsp; Grouped By
-            Category
+          <div className=""> Group&nbsp;
+            <i className="fa fa-check" aria-hidden="true"></i>
+            
           </div>
         ) : (
-          <div className="">
-            <i className="fa fa-ban" aria-hidden="true"></i>&nbsp; Ungrouped.
+          <div className="">Group&nbsp;
+          
           </div>
         )}
       </div>

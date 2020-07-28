@@ -1,0 +1,25 @@
+@import "../../../Colors/ColorSchema.scss";
+.div-filters {
+  height: 100px;
+  width: 100%;
+
+}
+.select-elm {
+  background: $morelight;
+  color: $dark;
+}
+
+select:focus > option:checked { 
+  background:  $secondary !important;
+}
+.set-filter {
+  cursor: pointer;
+  color: $dark;
+
+  border: none;
+  border-bottom: 2px solid $primary;
+}
+.checks-wrapper {
+  display: flex;
+  flex-direction: column;
+}

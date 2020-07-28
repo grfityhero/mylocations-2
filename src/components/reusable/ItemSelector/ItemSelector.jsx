@@ -8,6 +8,7 @@ import ItemSort from "./../ItemSort/ItemSort"
 import { SORT_ITEMS, GROUP_ITEMS, RESET } from "../../../Types/CategoriesTypes"
 import { EDIT_MODE } from "../../../Types/ToolsTypes"
 import GroupByCategory from "./../ItemGroup/GroupByCategory"
+import ItemFilter from "./../ItemFilter/ItemFilter"
 function ItemSelector({setitmIndex}) {
   //deconstruct from MainContext
   const { state, dispatch, toolsDispatch, toolsState } = React.useContext(
@@ -19,6 +20,9 @@ function ItemSelector({setitmIndex}) {
   //sort data or not
   const [sortAsc, setsortAsc] = useState(true)
   const [groupByCategory, setGroupByCategory] = useState(false)
+
+  /* filter */
+  const [filter, setFilter] = useState(false)
 
   useEffect(() => {
     if (groupByCategory) {
@@ -74,10 +78,14 @@ function ItemSelector({setitmIndex}) {
           <ItemSort sortAsc={sortAsc} setsortAsc={setsortAsc} />
          
          {toolsState.selectedentity !== "categories" &&
+          <>
           <GroupByCategory
             groupByCategory={groupByCategory}
-            setGroupByCategory={setGroupByCategory}
-          />}
+            setGroupByCategory={setGroupByCategory}/>
+ 
+            <ItemFilter filter={filter} setFilter={setFilter}/>
+            </>
+ }
 
           {entity.map((catItem, index) => (
             <Item

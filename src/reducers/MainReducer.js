@@ -12,6 +12,7 @@ import {
   SORT_ITEMS,
   GROUP_ITEMS,
   COORDS_FROM_MAP,
+  FILTER_ITEMS,
 } from "../Types/CategoriesTypes"
 import _ from "lodash"
 
@@ -26,12 +27,17 @@ export const reducer = (state, action) => {
       return { ...state, activeCategory: action.payload }
     }
     case ACTIVE_LOCATION: {
-      
+
       localStorage.setItem(
         "state",
         JSON.stringify({ ...state, activeLocation: action.payload })
       )
       return { ...state, activeLocation: action.payload }
+ 
+   
+   
+      
+      
     }
     case ADD_CATEGORY_ITEM: {
       console.log("adding category: ", action.payload)
@@ -149,8 +155,7 @@ export const reducer = (state, action) => {
         categories: [...state.categories],
 
         locations: [
-          ...state.locations.filter(
-            (itm) => itm.name !== action.payload.name),
+          ...state.locations.filter((itm) => itm.name !== action.payload.name),
           action.payload,
         ],
       }
@@ -203,12 +208,18 @@ export const reducer = (state, action) => {
     }
 
     case RESET: {
-      // console.log("reseting")
-      localStorage.setItem(
-        "state",
-        JSON.stringify({ ...state, activeCategory: "", activeLocation: "" })
-      )
-      return { ...state, activeCategory: "", activeLocation: "" }
+      let initialState
+      let storageState = localStorage.getItem("state")
+      if (storageState) {
+        /* reseting states'*/
+        initialState = JSON.parse(storageState)
+        /* pull back all  */
+        return {
+          ...initialState,
+        }
+      } else {
+        return { ...state, activeCategory: "", activeLocation: "" }
+      }
     }
 
     case SORT_ITEMS: {
@@ -257,6 +268,7 @@ export const reducer = (state, action) => {
         }
       }
     }
+
     case GROUP_ITEMS: {
       let groupedLocations = []
 
@@ -285,6 +297,34 @@ export const reducer = (state, action) => {
         locations: groupedLocations,
       }
     }
+    case FILTER_ITEMS: {
+      console.log("FILTER_ITEMS ", action.payload)
+      let initialState
+      let storageState = localStorage.getItem("state")
+      if (storageState) {
+        /* reseting loations'*/
+        initialState = JSON.parse(storageState)
+      }
+
+      if (action.payload === "all") {
+        /* pull back all filtered location */
+        return {
+          ...initialState
+        }
+      } else {
+        /* Filter selected category */
+        let filteredLocations = initialState.locations.filter(
+          (item) => item.category === action.payload
+        )      
+        return {
+          ...state,
+          categories: [...state.categories],
+          locations: [...filteredLocations]    
+        }
+      }
+
+    }
+
     case COORDS_FROM_MAP: {
       // console.log("setting coordss from map " ,action.payload)
       localStorage.setItem(
