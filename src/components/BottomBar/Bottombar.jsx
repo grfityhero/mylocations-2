@@ -4,12 +4,13 @@ import mainContext from "../../context/MainContext"
 import { SELECTED_ENTITY } from "../../Types/ToolsTypes"
 import { RESET } from "../../Types/CategoriesTypes"
 
-const Bottombar = () => {
+const Bottombar = ({setitmIndex}) => {
   const { toolsState, toolsDispatch, dispatch } = React.useContext(mainContext)
 
   const handleToggleEntity = () => {
     toolsDispatch({ type: SELECTED_ENTITY, payload: "locations" })
     dispatch({ type: RESET })
+    setitmIndex(0)
   }
   return (
     <div className="bottombar-section">

@@ -215,7 +215,7 @@ export const reducer = (state, action) => {
         initialState = JSON.parse(storageState)
         /* pull back all  */
         return {
-          ...initialState,
+          ...initialState, activeCategory: "", activeLocation: ""
         }
       } else {
         return { ...state, activeCategory: "", activeLocation: "" }
@@ -276,7 +276,7 @@ export const reducer = (state, action) => {
         return itm.category === itm.category ? itm.category : "single"
       })
 
-      _.forEach(groupedLocationsTmp, function (value, key) {
+      _.forEach(groupedLocationsTmp, (value)=> {
         groupedLocations.push(...value)
       })
 

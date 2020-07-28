@@ -58,7 +58,10 @@ function MapMain({ itmIndex }) {
   }
   return (
     <div className="map-wrapper">
-     {position &&
+    {toolsState.editMode&&  <div className="map-click">Click on the map to pick coordinates </div>}
+     {position && 
+     <>
+    
       <Map onClick={handleMapClick} center={position} zoom={12}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -80,6 +83,7 @@ function MapMain({ itmIndex }) {
           </Popup>
         </Marker>
       </Map>
+</>
 }
    </div>
   )

@@ -12,6 +12,7 @@ const Item = ({ name, toggleActive, index, active }) => {
           : "list-group-item general-item"
       }
     >
+      
       {name}
     </li>
   )

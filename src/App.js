@@ -55,7 +55,7 @@ useEffect(() => {
         </div>
 
         <div className="bottombar-component-wrapper">
-          <Bottombar />
+          <Bottombar setitmIndex={setitmIndex}/>
         </div>
       </div>
     </MainContext.Provider>

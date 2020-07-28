@@ -1,5 +1,14 @@
 @import "../../../Colors/ColorSchema.scss";
-
+.group-span{
+  width:100%;
+  background: $dark;
+  padding:2px;
+  margin-top:15px;
+  padding-left:7px;
+  border-bottom:2px solid white;
+  color:white;
+  font-size: .8rem;
+}
 .listGroup-wrapper {
   width: 100%;
   padding: 5px;

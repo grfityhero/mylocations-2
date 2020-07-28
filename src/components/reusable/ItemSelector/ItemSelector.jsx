@@ -9,7 +9,7 @@ import { SORT_ITEMS, GROUP_ITEMS, RESET } from "../../../Types/CategoriesTypes"
 import { EDIT_MODE } from "../../../Types/ToolsTypes"
 import GroupByCategory from "./../ItemGroup/GroupByCategory"
 import ItemFilter from "./../ItemFilter/ItemFilter"
-function ItemSelector({setitmIndex}) {
+function ItemSelector({ setitmIndex }) {
   //deconstruct from MainContext
   const { state, dispatch, toolsDispatch, toolsState } = React.useContext(
     MainContext
@@ -41,16 +41,12 @@ function ItemSelector({setitmIndex}) {
 
   useEffect(() => {
     if (toolsState.selectedentity === "categories") {
-     
       setentity(state.categories)
       setactiveItem(state.activeCategory)
-      
     } else {
       setentity(state.locations)
       setactiveItem(state.activeLocation)
-      
     }
-   
   }, [
     toolsState.selectedentity,
     state.categories,
@@ -61,8 +57,10 @@ function ItemSelector({setitmIndex}) {
   ])
 
   const callToggle = (index) => {
-    setitmIndex(0) /* reset index if moved to other item which might have an index of 0 */
-    
+    setitmIndex(
+      0
+    ) /* reset index if moved to other item which might have an index of 0 */
+
     toggleActive(index, state, toolsState, dispatch, toolsDispatch)
     //console.log(state.activeLocation)
     toolsDispatch({
@@ -76,29 +74,45 @@ function ItemSelector({setitmIndex}) {
       {entity ? (
         <ul className="list-group general-list">
           <ItemSort sortAsc={sortAsc} setsortAsc={setsortAsc} />
-         
-         {toolsState.selectedentity !== "categories" &&
-          <>
-          <GroupByCategory
-            groupByCategory={groupByCategory}
-            setGroupByCategory={setGroupByCategory}/>
- 
-            <ItemFilter filter={filter} setFilter={setFilter}/>
+
+          {toolsState.selectedentity !== "categories" && (
+            <>
+              <GroupByCategory
+                groupByCategory={groupByCategory}
+                setGroupByCategory={setGroupByCategory}
+              />
+
+              <ItemFilter filter={filter} setFilter={setFilter} />
             </>
- }
+          )}
 
           {entity.map((catItem, index) => (
-            <Item
-              index={index}
-              key={index}
-              active={
-                toolsState.selectedentity === "categories"
-                  ? state.activeCategory === catItem.name
-                  : state.activeLocation.name === catItem.name
-              }
-              name={catItem.name}
-              toggleActive={() => callToggle(index)}
-            />
+            <>
+              {/* seperate grouped */}
+              {/* first seperator */}
+              {groupByCategory && index === 0 && (
+                <span className="group-span">{catItem.category}</span>
+              )}
+              {/* others seperators */}
+              {toolsState.selectedentity === "locations" &&
+                groupByCategory &&
+                index > 0 &&
+                catItem.category !== entity[index - 1].category && (
+                  <span className="group-span">{catItem.category}</span>
+                )}
+                
+              <Item
+                index={index}
+                key={index}
+                active={
+                  toolsState.selectedentity === "categories"
+                    ? state.activeCategory === catItem.name
+                    : state.activeLocation.name === catItem.name
+                }
+                name={catItem.name}
+                toggleActive={() => callToggle(index)}
+              />
+            </>
           ))}
         </ul>
       ) : (

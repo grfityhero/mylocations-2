@@ -24,10 +24,9 @@ export function toggleActive(
     entity[index].name === state.activeCategory ||
     entity[index].name === state.activeLocation.name
   ) {
-   /*  dispatch({ type: RESET }) */
+    dispatch({ type: RESET }) 
   } else {
     /* set selected and corresponding data */
-
     if (toolsState.selectedentity === "categories") {
       dispatch({
         type: ACTIVE_CATEGORY,
