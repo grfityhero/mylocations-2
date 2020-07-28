@@ -14,20 +14,18 @@ const ModalDeleteAction = ({ showModalDelete, setshowModalDelete, entity }) => {
 
   /* watch for entity change */
   useEffect(() => {
-  
     entity === "categories"
       ? setActive(state.activeCategory)
       : setActive(state.activeLocation)
-  
   }, [state.activeCategory, state.activeLocation])
 
   const handleDelete = (confirm) => {
     if (entity === "categories" && confirm === true) {
-      console.log("categories entity->", entity, confirm)
+      //console.log("categories entity->", entity, confirm)
       dispatch({ type: DELETE_CATEGORY_ITEM, payload: state.activeCategory })
       dispatch({ type: RESET })
     } else if (entity === "locations" && confirm === true) {
-      console.log("locations entity->", entity, confirm)
+      //console.log("locations entity->", entity, confirm)
       dispatch({ type: DELETE_LOCATION_ITEM, payload: state.activeLocation })
       dispatch({ type: RESET })
     }

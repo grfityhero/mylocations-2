@@ -5,7 +5,7 @@ import MainContext from "../../../context/MainContext"
 import { toggleActive } from "./ItemSelectorHelper"
 /* import Category from "./../../Category/Category" */
 import ItemSort from "./../ItemSort/ItemSort"
-import { SORT_ITEMS, GROUP_ITEMS, RESET } from "../../../Types/CategoriesTypes"
+import { SORT_ITEMS, GROUP_ITEMS } from "../../../Types/CategoriesTypes"
 import { EDIT_MODE } from "../../../Types/ToolsTypes"
 import GroupByCategory from "./../ItemGroup/GroupByCategory"
 import ItemFilter from "./../ItemFilter/ItemFilter"
@@ -15,7 +15,7 @@ function ItemSelector({ setitmIndex }) {
     MainContext
   )
   const [entity, setentity] = useState([])
-  const [activeItem, setactiveItem] = useState()
+
 
   //sort data or not
   const [sortAsc, setsortAsc] = useState(true)
@@ -42,10 +42,10 @@ function ItemSelector({ setitmIndex }) {
   useEffect(() => {
     if (toolsState.selectedentity === "categories") {
       setentity(state.categories)
-      setactiveItem(state.activeCategory)
+     
     } else {
       setentity(state.locations)
-      setactiveItem(state.activeLocation)
+     
     }
   }, [
     toolsState.selectedentity,
@@ -60,7 +60,7 @@ function ItemSelector({ setitmIndex }) {
     /* reset index if moved to other item which might have an index of 0 */
     setitmIndex(0)
     toggleActive(index, state, toolsState, dispatch, toolsDispatch)
-    //console.log(state.activeLocation)
+    ////console.log(state.activeLocation)
     toolsDispatch({
       type: EDIT_MODE,
       payload: false,
@@ -88,20 +88,20 @@ function ItemSelector({ setitmIndex }) {
             <>
               {/* seperate grouped */}
               {/* first seperator */}
-              {groupByCategory && index === 0 && (
+             {/*  {groupByCategory && index === 0 && (
                 <span className="group-span" key={index}>
                   {catItem.category}
                 </span>
-              )}
+              )} */}
               {/* others seperators */}
-              {toolsState.selectedentity === "locations" &&
+              {/*  {toolsState.selectedentity === "locations" &&
                 groupByCategory &&
                 index > 0 &&
                 catItem.category !== entity[index - 1].category && (
                   <span key={index} className="group-span">
                     {catItem.category}
                   </span>
-                )}
+                )}  */}
 
               <Item
                 index={index}

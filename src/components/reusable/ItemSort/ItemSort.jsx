@@ -1,4 +1,4 @@
-import React, { usState, useEffect } from "react"
+import React from "react"
 import "./ItemSort.scss"
 
 const ItemSort = ({ sortAsc, setsortAsc }) => {

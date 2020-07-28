@@ -6,7 +6,6 @@ import {
   UPDATE_CATEGORY,
   ACTIVE_LOCATION,
   RESET,
-  SORT_ITEMS,
 } from "../../../Types/CategoriesTypes"
 import { motion } from "framer-motion"
 import "../../../styles/hover.css"
@@ -40,9 +39,8 @@ function ItemInfo({ setitmIndex, itmIndex }) {
         (item) => item.category === state.activeCategory
       )
       if (tmpArr.length > 0) {
-        setlocationStateObj(tmpArr[0])  
+        setlocationStateObj(tmpArr[0])
       }
-
     } else {
       /* locations */
       entity = state.locations
@@ -57,7 +55,12 @@ function ItemInfo({ setitmIndex, itmIndex }) {
     } else {
       setShowComponent(false)
     }
-  }, [toolsState.editMode, state.activeCategory, state.activeLocation,toolsState.selectedentity])
+  }, [
+    toolsState.editMode,
+    state.activeCategory,
+    state.activeLocation,
+    toolsState.selectedentity,
+  ])
 
   /* submit updates to item */
   const handleSubmit = (e) => {
@@ -77,9 +80,9 @@ function ItemInfo({ setitmIndex, itmIndex }) {
           newName: locationStateObj.category,
         },
       })
-      console.log(state.activeCategory, locationStateObj)
+      //console.log(state.activeCategory, locationStateObj)
     } else {
-      console.log("SUBMIT: ", state.activeLocation)
+      //console.log("SUBMIT: ", state.activeLocation)
       /* update location object first */
       let locationPayLoad = {
         ...locationStateObj,
@@ -88,14 +91,15 @@ function ItemInfo({ setitmIndex, itmIndex }) {
       }
 
       /* update location state */
-       dispatch({ type: UPDATE_LOCATION, 
-        payload: {obj:locationPayLoad,oldName:state.activeLocation.name}})
-       
-       
+      dispatch({
+        type: UPDATE_LOCATION,
+        payload: { obj: locationPayLoad, oldName: state.activeLocation.name },
+      })
+
       dispatch({ type: ACTIVE_LOCATION, payload: locationPayLoad })
     }
     dispatch({ type: RESET })
-   /*  dispatch({ type: SORT_ITEMS, payload: "ASC" }) */
+    /*  dispatch({ type: SORT_ITEMS, payload: "ASC" }) */
     setMessages("Updated successfully!")
     setShowMsg(true)
     setTimeout(() => {
@@ -114,17 +118,19 @@ function ItemInfo({ setitmIndex, itmIndex }) {
     /*  seteditMode(false) */
   }
   const handleChange = (e) => {
-    console.log("handleChange fires")
+    //console.log("handleChange fires")
     e.preventDefault()
-    let {value,name} = e.target
-   
-    /* console.log("value: ", value)
-    console.log("name: ", name) */
+    let { value, name } = e.target
+
+    /* //console.log("value: ", value)
+    //console.log("name: ", name) */
     /* update a location object first */
-    let tmpLocation = { ...state.activeLocation,
-       [name]: value,
+    let tmpLocation = {
+      ...state.activeLocation,
+      [name]: value,
       coordinatesLat: state.coordsFromMap[0],
-      coordinatesLong: state.coordsFromMap[1], }
+      coordinatesLong: state.coordsFromMap[1],
+    }
     setlocationStateObj(tmpLocation)
   }
   return (

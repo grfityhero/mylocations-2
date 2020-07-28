@@ -2,13 +2,10 @@ import React, { useEffect, useState } from "react"
 import MainContext from "../../../context/MainContext"
 import "./ItemInfoViewer.scss"
 
-
-
-function ItemInfoViewer({setitmIndex,itmIndex}) {
+function ItemInfoViewer({ setitmIndex, itmIndex }) {
   const { state, toolsState } = React.useContext(MainContext)
-  const [entity, setentity] = useState([])
+  const [entity,setentity] = useState([])
 
- 
   const [groupedLocation, setGroupedLocation] = useState([])
 
   useEffect(() => {
@@ -35,7 +32,6 @@ function ItemInfoViewer({setitmIndex,itmIndex}) {
       )
       setGroupedLocation(arr)
       setentity(arr)
-
     }
   }, [
     toolsState.selectedentity,
@@ -52,20 +48,20 @@ function ItemInfoViewer({setitmIndex,itmIndex}) {
     if (groupedLocation.length > 1 && itmIndex < groupedLocation.length - 1) {
       setitmIndex(itmIndex + 1)
     } else {
-      console.log("NO")
+      //console.log("NO")
     }
-    
-   // console.log(itmIndex)
+
+    // //console.log(itmIndex)
   }
 
   const handlePrevLocation = () => {
     if (groupedLocation.length > 1 && !itmIndex < 1) {
       setitmIndex(itmIndex - 1)
     } else {
-      console.log("NO")
+      //console.log("NO")
     }
-  /*   console.log(groupedLocation.length)
-    console.log(itmIndex) */
+    /*   //console.log(groupedLocation.length)
+    //console.log(itmIndex) */
   }
 
   return (

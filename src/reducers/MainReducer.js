@@ -19,7 +19,7 @@ import _ from "lodash"
 export const reducer = (state, action) => {
   switch (action.type) {
     case ACTIVE_CATEGORY: {
-      // console.log("setting active category action.payload ", action.payload)
+      // //console.log("setting active category action.payload ", action.payload)
       localStorage.setItem(
         "state",
         JSON.stringify({ ...state, activeCategory: action.payload })
@@ -34,7 +34,7 @@ export const reducer = (state, action) => {
       return { ...state, activeLocation: action.payload }
     }
     case ADD_CATEGORY_ITEM: {
-      console.log("adding category: ", action.payload)
+      //console.log("adding category: ", action.payload)
       localStorage.setItem(
         "state",
         JSON.stringify({
@@ -48,7 +48,7 @@ export const reducer = (state, action) => {
       }
     }
     case ADD_LOCATION_ITEM: {
-      console.log("addin location: ", action.payload)
+      //console.log("addin location: ", action.payload)
       localStorage.setItem(
         "state",
         JSON.stringify({
@@ -82,7 +82,7 @@ export const reducer = (state, action) => {
       }
     }
     case DELETE_CATEGORY_ITEM: {
-      console.log("try to delete category item ", action.payload)
+      //console.log("try to delete category item ", action.payload)
       localStorage.setItem(
         "state",
         JSON.stringify({
@@ -101,7 +101,7 @@ export const reducer = (state, action) => {
       }
     }
     case DELETE_LOCATION_ITEM: {
-      console.log("deleteing location item ", state.activeLocation)
+      //console.log("deleteing location item ", state.activeLocation)
       localStorage.setItem(
         "state",
         JSON.stringify({
@@ -128,8 +128,8 @@ export const reducer = (state, action) => {
 
     /*UPDATE_LOCATION UPDATE a location object from payload  */
     case UPDATE_LOCATION: {
-      console.log("obj : ", action.payload.obj)
-      console.log("oldName : ", action.payload.oldName)
+      //console.log("obj : ", action.payload.obj)
+      //console.log("oldName : ", action.payload.oldName)
 
       localStorage.setItem(
         "state",
@@ -161,7 +161,7 @@ export const reducer = (state, action) => {
 
     /*UPDATE_CATEGORY adding a location object from payload  */
     case UPDATE_CATEGORY: {
-      console.log("reducer UPDATE_CATEGORY with payload: ", action.payload)
+      //console.log("reducer UPDATE_CATEGORY with payload: ", action.payload)
       localStorage.setItem(
         "state",
         JSON.stringify({
@@ -173,6 +173,7 @@ export const reducer = (state, action) => {
               } else {
                 return itm
               }
+              //return null
             }),
           ],
 
@@ -189,11 +190,13 @@ export const reducer = (state, action) => {
         ...state,
         locations: [
           ...state.locations.map((itm) => {
+            
             if (itm.category === action.payload.oldName) {
               itm.category = action.payload.newName
             } else {
               return itm
             }
+            //  return null
           }),
         ],
         categories: [
@@ -298,7 +301,7 @@ export const reducer = (state, action) => {
       }
     }
     case FILTER_ITEMS: {
-      console.log("FILTER_ITEMS ", action.payload)
+      //console.log("FILTER_ITEMS ", action.payload)
       let initialState
       let storageState = localStorage.getItem("state")
       if (storageState) {
@@ -325,7 +328,7 @@ export const reducer = (state, action) => {
     }
 
     case COORDS_FROM_MAP: {
-      // console.log("setting coordss from map " ,action.payload)
+      // //console.log("setting coordss from map " ,action.payload)
       localStorage.setItem(
         "state",
         JSON.stringify({

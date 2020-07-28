@@ -12,7 +12,7 @@ export const toolsReducer = (state, action) => {
       return { ...state, showEditor: action.payload }
 
     case SELECTED_ENTITY:
-      console.log("selected entity is now -", action.payload)
+      //console.log("selected entity is now -", action.payload)
       JSON.stringify({
         ...state,
         selectedentity: action.payload,

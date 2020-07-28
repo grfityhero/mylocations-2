@@ -30,11 +30,11 @@ const ItemInfoEditor = ({
       label: locationStateObj.category,
     })
 
-    console.log('#InfoEditor -refreshed locationStateObj:' ,locationStateObj)
+    //console.log('#InfoEditor -refreshed locationStateObj:' ,locationStateObj)
   }, [state.activeLocation, toolsState.showEditor, locationStateObj])
 
   const handleChangeOption = (selectedOption) => {
-    console.log(selectedOption)
+    //console.log(selectedOption)
     setDefVal(selectedOption)
     setlocationStateObj({ ...locationStateObj, category: selectedOption.value })
   }

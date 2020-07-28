@@ -26,7 +26,7 @@ function App() {
   )
   const [itmIndex, setitmIndex] = useState(0)
 useEffect(() => {
- //console.log(state.locations);
+
   /* rerender */
 }, [state.locations])
 

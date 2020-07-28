@@ -8,7 +8,7 @@ import "./Addnew.scss"
 import { motion } from "framer-motion"
 
 function Addnew({ setShowAddItemForm }) {
-  const { state, dispatch, toolsState } = React.useContext(MainContext)
+  const { dispatch, toolsState } = React.useContext(MainContext)
   const [newItemName, setnewItemName] = useState("")
   const [errorText, seterrorText] = useState("")
   const [entity, setEntity] = useState(toolsState.selectedentity)
@@ -20,7 +20,6 @@ function Addnew({ setShowAddItemForm }) {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (newItemName) {
-      console.log("toolsState.selectedEntity ", toolsState.selectedentity)
       toolsState.selectedentity === "categories"
         ? dispatch({ type: ADD_CATEGORY_ITEM, payload: newItemName })
         : dispatch({ type: ADD_LOCATION_ITEM, payload: newItemName })
@@ -29,7 +28,7 @@ function Addnew({ setShowAddItemForm }) {
       setnewItemName("")
     } else {
       seterrorText("Nothing has been added.")
-      const timer = setTimeout(() => {
+      setTimeout(() => {
         seterrorText("")
 
         setShowAddItemForm(false)
@@ -62,7 +61,11 @@ function Addnew({ setShowAddItemForm }) {
             className="add-input-text"
             type="text"
             onChange={handleChange}
-            placeholder={entity=== "categories" ? "Enter New Category":"Enter New Location"}
+            placeholder={
+              entity === "categories"
+                ? "Enter New Category"
+                : "Enter New Location"
+            }
           />
 
           <input type="submit" value="Submit" className="submit-button"></input>

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react"
 import "./ItemFilter.scss"
 import MainContext from "../../../context/MainContext"
-import { Checkbox } from "@material-ui/core"
-import { FILTER_ITEMS, RESET } from "../../../Types/CategoriesTypes"
+import { FILTER_ITEMS } from "../../../Types/CategoriesTypes"
 const ItemFilter = ({ setFilter, filter }) => {
   //deconstruct from MainContext
   const { state, dispatch } = React.useContext(MainContext)
@@ -11,7 +10,6 @@ const ItemFilter = ({ setFilter, filter }) => {
 
   useEffect(() => {
     setCatFilters(state.categories)
-    // console.log('FX' ,state.locations)
   }, [state.locations])
 
   const handleChangeFilter = (e) => {
@@ -21,17 +19,11 @@ const ItemFilter = ({ setFilter, filter }) => {
       type: FILTER_ITEMS,
       payload: categorySelected,
     }) 
-  /*   setCatFilters(
-      state.categories.filter((category) => category !== categorySelected)
-    ) */
+ 
   }
 
   return (
     <div className="filter-section">
-      {/*   <div className="set-filter" onClick={() => setFilter(!filter)}>
-        Filter
-      </div> */}
-
       <div className="checks-wrapper">
         <select
           className="select-elm"
