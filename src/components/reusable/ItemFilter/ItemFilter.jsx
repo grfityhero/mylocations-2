@@ -9,15 +9,14 @@ const ItemFilter = ({ setFilter, filter }) => {
   const [selectedCat, setselectedCat] = useState("all")
   useEffect(() => {
     setCatFilters(state.categories)
-  }, [state.locations,state.categories])
+  }, [state.locations, state.categories])
   const handleChangeFilter = (e) => {
     let categorySelected = e.target.value
     setselectedCat(categorySelected)
-      dispatch({
+    dispatch({
       type: FILTER_ITEMS,
       payload: categorySelected,
-    }) 
- 
+    })
   }
   return (
     <div className="filter-section">
@@ -26,7 +25,6 @@ const ItemFilter = ({ setFilter, filter }) => {
           className="select-elm"
           onChange={handleChangeFilter}
           value={selectedCat}
-          defaultValue={selectedCat}
         >
           <option value="all">Select Filter</option>
           <option value="all">All</option>
