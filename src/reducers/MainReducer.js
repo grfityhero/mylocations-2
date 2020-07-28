@@ -27,17 +27,11 @@ export const reducer = (state, action) => {
       return { ...state, activeCategory: action.payload }
     }
     case ACTIVE_LOCATION: {
-
       localStorage.setItem(
         "state",
         JSON.stringify({ ...state, activeLocation: action.payload })
       )
       return { ...state, activeLocation: action.payload }
- 
-   
-   
-      
-      
     }
     case ADD_CATEGORY_ITEM: {
       console.log("adding category: ", action.payload)
@@ -134,7 +128,9 @@ export const reducer = (state, action) => {
 
     /*UPDATE_LOCATION UPDATE a location object from payload  */
     case UPDATE_LOCATION: {
-      console.log("reducer UPDATE_LOCATION: ", action.payload)
+      console.log("obj : ", action.payload.obj)
+      console.log("oldName : ", action.payload.oldName)
+
       localStorage.setItem(
         "state",
         JSON.stringify({
@@ -143,9 +139,9 @@ export const reducer = (state, action) => {
 
           locations: [
             ...state.locations.filter(
-              (itm) => itm.name !== action.payload.name
+              (itm) => itm.name !== action.payload.oldName
             ),
-            action.payload,
+            action.payload.obj,
           ],
         })
       )
@@ -155,8 +151,10 @@ export const reducer = (state, action) => {
         categories: [...state.categories],
 
         locations: [
-          ...state.locations.filter((itm) => itm.name !== action.payload.name),
-          action.payload,
+          ...state.locations.filter(
+            (itm) => itm.name !== action.payload.oldName
+          ),
+          action.payload.obj,
         ],
       }
     }
@@ -215,7 +213,9 @@ export const reducer = (state, action) => {
         initialState = JSON.parse(storageState)
         /* pull back all  */
         return {
-          ...initialState, activeCategory: "", activeLocation: ""
+          ...initialState,
+          activeCategory: "",
+          activeLocation: "",
         }
       } else {
         return { ...state, activeCategory: "", activeLocation: "" }
@@ -276,7 +276,7 @@ export const reducer = (state, action) => {
         return itm.category === itm.category ? itm.category : "single"
       })
 
-      _.forEach(groupedLocationsTmp, (value)=> {
+      _.forEach(groupedLocationsTmp, (value) => {
         groupedLocations.push(...value)
       })
 
@@ -309,20 +309,19 @@ export const reducer = (state, action) => {
       if (action.payload === "all") {
         /* pull back all filtered location */
         return {
-          ...initialState
+          ...initialState,
         }
       } else {
         /* Filter selected category */
         let filteredLocations = initialState.locations.filter(
           (item) => item.category === action.payload
-        )      
+        )
         return {
           ...state,
           categories: [...state.categories],
-          locations: [...filteredLocations]    
+          locations: [...filteredLocations],
         }
       }
-
     }
 
     case COORDS_FROM_MAP: {

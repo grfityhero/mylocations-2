@@ -88,7 +88,10 @@ function ItemInfo({ setitmIndex, itmIndex }) {
       }
 
       /* update location state */
-      dispatch({ type: UPDATE_LOCATION, payload: locationPayLoad })
+       dispatch({ type: UPDATE_LOCATION, 
+        payload: {obj:locationPayLoad,oldName:state.activeLocation.name}})
+       
+       
       dispatch({ type: ACTIVE_LOCATION, payload: locationPayLoad })
     }
     dispatch({ type: RESET })
@@ -113,12 +116,15 @@ function ItemInfo({ setitmIndex, itmIndex }) {
   const handleChange = (e) => {
     console.log("handleChange fires")
     e.preventDefault()
-    let value = e.target.value
-    let name = e.target.name
-    console.log("value: ", value)
-    console.log("name: ", name)
+    let {value,name} = e.target
+   
+    /* console.log("value: ", value)
+    console.log("name: ", name) */
     /* update a location object first */
-    let tmpLocation = { ...state.activeLocation, [name]: value }
+    let tmpLocation = { ...state.activeLocation,
+       [name]: value,
+      coordinatesLat: state.coordsFromMap[0],
+      coordinatesLong: state.coordsFromMap[1], }
     setlocationStateObj(tmpLocation)
   }
   return (

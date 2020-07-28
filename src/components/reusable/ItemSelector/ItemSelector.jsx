@@ -57,10 +57,8 @@ function ItemSelector({ setitmIndex }) {
   ])
 
   const callToggle = (index) => {
-    setitmIndex(
-      0
-    ) /* reset index if moved to other item which might have an index of 0 */
-
+    /* reset index if moved to other item which might have an index of 0 */
+    setitmIndex(0)
     toggleActive(index, state, toolsState, dispatch, toolsDispatch)
     //console.log(state.activeLocation)
     toolsDispatch({
@@ -91,16 +89,20 @@ function ItemSelector({ setitmIndex }) {
               {/* seperate grouped */}
               {/* first seperator */}
               {groupByCategory && index === 0 && (
-                <span className="group-span">{catItem.category}</span>
+                <span className="group-span" key={index}>
+                  {catItem.category}
+                </span>
               )}
               {/* others seperators */}
               {toolsState.selectedentity === "locations" &&
                 groupByCategory &&
                 index > 0 &&
                 catItem.category !== entity[index - 1].category && (
-                  <span className="group-span">{catItem.category}</span>
+                  <span key={index} className="group-span">
+                    {catItem.category}
+                  </span>
                 )}
-                
+
               <Item
                 index={index}
                 key={index}
