@@ -1,6 +1,5 @@
 import React from "react"
 import "./ItemSort.scss"
-
 const ItemSort = ({ sortAsc, setsortAsc }) => {
   return (
     <div>
@@ -10,5 +9,4 @@ const ItemSort = ({ sortAsc, setsortAsc }) => {
     </div>
   )
 }
-
 export default ItemSort

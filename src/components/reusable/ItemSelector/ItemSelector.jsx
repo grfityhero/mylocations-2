@@ -15,37 +15,34 @@ function ItemSelector({ setitmIndex }) {
     MainContext
   )
   const [entity, setentity] = useState([])
-
-
   //sort data or not
   const [sortAsc, setsortAsc] = useState(true)
   const [groupByCategory, setGroupByCategory] = useState(false)
-
   /* filter */
   const [filter, setFilter] = useState(false)
-
   useEffect(() => {
     if (groupByCategory) {
       dispatch({ type: GROUP_ITEMS }) /* group locations by category */
     } else {
       dispatch({ type: SORT_ITEMS, payload: "ASC" })
     }
+    // eslint-disable-next-line
   }, [groupByCategory])
-
   /* sort ,group,effect */
   useEffect(() => {
-    sortAsc
+    sortAsc ? dispatchSort("ASC") : dispatchSort("DESC")
+    // eslint-disable-next-line
+  }, [sortAsc])
+  const dispatchSort = (direction) => {
+    direction === "ASC"
       ? dispatch({ type: SORT_ITEMS, payload: "ASC" })
       : dispatch({ type: SORT_ITEMS, payload: "DESC" })
-  }, [sortAsc])
-
+  }
   useEffect(() => {
     if (toolsState.selectedentity === "categories") {
       setentity(state.categories)
-     
     } else {
       setentity(state.locations)
-     
     }
   }, [
     toolsState.selectedentity,
@@ -55,7 +52,6 @@ function ItemSelector({ setitmIndex }) {
     state.activeLocation,
     sortAsc,
   ])
-
   const callToggle = (index) => {
     /* reset index if moved to other item which might have an index of 0 */
     setitmIndex(0)
@@ -66,44 +62,24 @@ function ItemSelector({ setitmIndex }) {
       payload: false,
     })
   }
-
   return (
     <div className="listGroup-wrapper">
       {entity ? (
         <ul className="list-group general-list">
           <ItemSort sortAsc={sortAsc} setsortAsc={setsortAsc} />
-
           {toolsState.selectedentity !== "categories" && (
-            <>
+            <div>
               <GroupByCategory
                 groupByCategory={groupByCategory}
                 setGroupByCategory={setGroupByCategory}
               />
-
               <ItemFilter filter={filter} setFilter={setFilter} />
-            </>
+            </div>
           )}
-
           {entity.map((catItem, index) => (
-            <>
-              {/* seperate grouped */}
-              {/* first seperator */}
-             {/*  {groupByCategory && index === 0 && (
-                <span className="group-span" key={index}>
-                  {catItem.category}
-                </span>
-              )} */}
-              {/* others seperators */}
-              {/*  {toolsState.selectedentity === "locations" &&
-                groupByCategory &&
-                index > 0 &&
-                catItem.category !== entity[index - 1].category && (
-                  <span key={index} className="group-span">
-                    {catItem.category}
-                  </span>
-                )}  */}
-
-              <Item
+            <div key={index}>
+         
+               <Item
                 index={index}
                 key={index}
                 active={
@@ -113,8 +89,8 @@ function ItemSelector({ setitmIndex }) {
                 }
                 name={catItem.name}
                 toggleActive={() => callToggle(index)}
-              />
-            </>
+              /> 
+            </div>
           ))}
         </ul>
       ) : (
@@ -123,5 +99,4 @@ function ItemSelector({ setitmIndex }) {
     </div>
   )
 }
-
 export default ItemSelector

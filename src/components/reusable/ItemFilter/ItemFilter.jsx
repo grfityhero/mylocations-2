@@ -7,11 +7,9 @@ const ItemFilter = ({ setFilter, filter }) => {
   const { state, dispatch } = React.useContext(MainContext)
   const [catFilters, setCatFilters] = useState([])
   const [selectedCat, setselectedCat] = useState("all")
-
   useEffect(() => {
     setCatFilters(state.categories)
-  }, [state.locations])
-
+  }, [state.locations,state.categories])
   const handleChangeFilter = (e) => {
     let categorySelected = e.target.value
     setselectedCat(categorySelected)
@@ -21,7 +19,6 @@ const ItemFilter = ({ setFilter, filter }) => {
     }) 
  
   }
-
   return (
     <div className="filter-section">
       <div className="checks-wrapper">
@@ -33,7 +30,6 @@ const ItemFilter = ({ setFilter, filter }) => {
         >
           <option value="all">Select Filter</option>
           <option value="all">All</option>
-
           {catFilters.map((item, i) => (
             <option value={item.name} key={i}>
               {item.name}
@@ -44,5 +40,4 @@ const ItemFilter = ({ setFilter, filter }) => {
     </div>
   )
 }
-
 export default ItemFilter

@@ -3,10 +3,8 @@ import "./Bottombar.scss"
 import mainContext from "../../context/MainContext"
 import { SELECTED_ENTITY } from "../../Types/ToolsTypes"
 import { RESET } from "../../Types/CategoriesTypes"
-
 const Bottombar = ({setitmIndex}) => {
   const { toolsState, toolsDispatch, dispatch } = React.useContext(mainContext)
-
   const handleToggleEntity = () => {
     toolsDispatch({ type: SELECTED_ENTITY, payload: "locations" })
     dispatch({ type: RESET })
@@ -41,5 +39,4 @@ const Bottombar = ({setitmIndex}) => {
     </div>
   )
 }
-
 export default Bottombar

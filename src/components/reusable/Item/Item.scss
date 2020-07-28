@@ -1,5 +1,4 @@
 @import "../../../Colors/ColorSchema.scss";
-
 .general-item {
   background: $morelight;
   font-size: 1rem;
@@ -11,7 +10,6 @@
 .general-item-active {
   background: $secondary;
 }
-
 @media (max-width: 600px) {
   .general-item {
     padding: 6px;

@@ -1,6 +1,5 @@
 import React from "react"
 import "./Item.scss"
-
 const Item = ({ name, toggleActive, index, active }) => {
   return (
     <li
@@ -17,5 +16,4 @@ const Item = ({ name, toggleActive, index, active }) => {
     </li>
   )
 }
-
 export default Item

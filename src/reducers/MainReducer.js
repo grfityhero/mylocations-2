@@ -15,7 +15,6 @@ import {
   FILTER_ITEMS,
 } from "../Types/CategoriesTypes"
 import _ from "lodash"
-
 export const reducer = (state, action) => {
   switch (action.type) {
     case ACTIVE_CATEGORY: {
@@ -53,7 +52,6 @@ export const reducer = (state, action) => {
         "state",
         JSON.stringify({
           ...state,
-
           locations: [
             ...state.locations,
             {
@@ -68,7 +66,6 @@ export const reducer = (state, action) => {
       )
       return {
         ...state,
-
         locations: [
           ...state.locations,
           {
@@ -92,7 +89,6 @@ export const reducer = (state, action) => {
           ],
         })
       )
-
       return {
         ...state,
         categories: [
@@ -106,7 +102,6 @@ export const reducer = (state, action) => {
         "state",
         JSON.stringify({
           ...state,
-
           locations: [
             ...state.locations.filter(
               (item) => item.name !== state.activeLocation.name
@@ -114,10 +109,8 @@ export const reducer = (state, action) => {
           ],
         })
       )
-
       return {
         ...state,
-
         locations: [
           ...state.locations.filter(
             (item) => item.name !== state.activeLocation.name
@@ -125,18 +118,15 @@ export const reducer = (state, action) => {
         ],
       }
     }
-
     /*UPDATE_LOCATION UPDATE a location object from payload  */
     case UPDATE_LOCATION: {
       //console.log("obj : ", action.payload.obj)
       //console.log("oldName : ", action.payload.oldName)
-
       localStorage.setItem(
         "state",
         JSON.stringify({
           ...state,
           categories: [...state.categories],
-
           locations: [
             ...state.locations.filter(
               (itm) => itm.name !== action.payload.oldName
@@ -145,11 +135,9 @@ export const reducer = (state, action) => {
           ],
         })
       )
-
       return {
         ...state,
         categories: [...state.categories],
-
         locations: [
           ...state.locations.filter(
             (itm) => itm.name !== action.payload.oldName
@@ -158,7 +146,6 @@ export const reducer = (state, action) => {
         ],
       }
     }
-
     /*UPDATE_CATEGORY adding a location object from payload  */
     case UPDATE_CATEGORY: {
       //console.log("reducer UPDATE_CATEGORY with payload: ", action.payload)
@@ -167,6 +154,7 @@ export const reducer = (state, action) => {
         JSON.stringify({
           ...state,
           locations: [
+            // eslint-disable-next-line
             ...state.locations.map((itm) => {
               if (itm.category === action.payload.oldName) {
                 itm.category = action.payload.newName
@@ -176,7 +164,6 @@ export const reducer = (state, action) => {
               //return null
             }),
           ],
-
           categories: [
             ...state.categories.filter(
               (itm) => itm.name !== action.payload.oldName
@@ -185,12 +172,11 @@ export const reducer = (state, action) => {
           ],
         })
       )
-
       return {
         ...state,
         locations: [
+          // eslint-disable-next-line
           ...state.locations.map((itm) => {
-            
             if (itm.category === action.payload.oldName) {
               itm.category = action.payload.newName
             } else {
@@ -207,7 +193,6 @@ export const reducer = (state, action) => {
         ],
       }
     }
-
     case RESET: {
       let initialState
       let storageState = localStorage.getItem("state")
@@ -224,7 +209,6 @@ export const reducer = (state, action) => {
         return { ...state, activeCategory: "", activeLocation: "" }
       }
     }
-
     case SORT_ITEMS: {
       if (action.payload === "ASC") {
         let sortredCategories = state.categories.sort((a, b) =>
@@ -233,21 +217,17 @@ export const reducer = (state, action) => {
         let sortredCLocations = state.locations.sort((a, b) =>
           a.name > b.name ? 1 : -1
         )
-
         localStorage.setItem(
           "state",
           JSON.stringify({
             ...state,
             categories: [...sortredCategories],
-
             locations: [...sortredCLocations],
           })
         )
-
         return {
           ...state,
           categories: [...sortredCategories],
-
           locations: [...sortredCLocations],
         }
       } else {
@@ -258,45 +238,36 @@ export const reducer = (state, action) => {
           JSON.stringify({
             ...state,
             categories: [...sortredCategories],
-
             locations: [...sortredCLocations],
           })
         )
-
         return {
           ...state,
           categories: [...sortredCategories],
-
           locations: [...sortredCLocations],
         }
       }
     }
-
     case GROUP_ITEMS: {
       let groupedLocations = []
-
       let groupedLocationsTmp = _.groupBy(state.locations, (itm) => {
+        // eslint-disable-next-line
         return itm.category === itm.category ? itm.category : "single"
       })
-
       _.forEach(groupedLocationsTmp, (value) => {
         groupedLocations.push(...value)
       })
-
       localStorage.setItem(
         "state",
         JSON.stringify({
           ...state,
           categories: [...state.categories],
-
           locations: groupedLocations,
         })
       )
-
       return {
         ...state,
         categories: [...state.categories],
-
         locations: groupedLocations,
       }
     }
@@ -308,7 +279,6 @@ export const reducer = (state, action) => {
         /* reseting loations'*/
         initialState = JSON.parse(storageState)
       }
-
       if (action.payload === "all") {
         /* pull back all filtered location */
         return {
@@ -326,7 +296,6 @@ export const reducer = (state, action) => {
         }
       }
     }
-
     case COORDS_FROM_MAP: {
       // //console.log("setting coordss from map " ,action.payload)
       localStorage.setItem(
@@ -336,13 +305,11 @@ export const reducer = (state, action) => {
           coordsFromMap: action.payload,
         })
       )
-
       return {
         ...state,
         coordsFromMap: action.payload,
       }
     }
-
     default:
       return state
   }

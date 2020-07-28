@@ -1,6 +1,5 @@
 import React from "react"
 import "./GroupByCategory.scss"
-
 function GroupByCategory({ setGroupByCategory, groupByCategory }) {
   return (
     <div>
@@ -22,5 +21,4 @@ function GroupByCategory({ setGroupByCategory, groupByCategory }) {
     </div>
   )
 }
-
 export default GroupByCategory

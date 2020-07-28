@@ -3,14 +3,11 @@
   padding: 10px;
   width: 70%;
 }
-
 .list-location {
   list-style: none;
 }
-
 .view-mode-container {
   display: flex;
-
   .titles {
     width: 30%;
     > p {
@@ -26,7 +23,6 @@
     }
   }
 }
-
 .edit-mode-container {
   display: flex;
   .titles {

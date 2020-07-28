@@ -9,7 +9,6 @@ import ModalDeleteAction from "./ModalDeleteAction"
 import BuildIcon from "@material-ui/icons/Build"
 import "../../../styles/hover.css"
 import { EDIT_MODE } from "../../../Types/ToolsTypes"
-
 const Editor = () => {
   const { state, toolsState, toolsDispatch } = React.useContext(MainContext)
   const [showAddItemForm, setShowAddItemForm] = useState(false)
@@ -17,7 +16,6 @@ const Editor = () => {
   const [showEdit, setShowEhowEdit] = useState(false)
   const [showModalDelete, setshowModalDelete] = useState(false)
   const [entity, setEntity] = useState(toolsState.selectedentity)
-
   useEffect(() => {
     setEntity(toolsState.selectedentity)
     if (state.activeCategory || state.activeLocation) {
@@ -28,7 +26,6 @@ const Editor = () => {
       setShowEhowEdit(false)
     }
   }, [state.activeCategory, state.activeLocation, toolsState.selectedentity])
-
   const handleAdd = () => {
     setShowAddItemForm(!showAddItemForm)
   }
@@ -41,7 +38,6 @@ const Editor = () => {
       payload: true,
     })
   }
-
   return (
     <div className="editor-section container-fluid ">
       <div className="editortool-title">
@@ -52,7 +48,6 @@ const Editor = () => {
         {!showEdit &&
           !showAddItemForm &&
           toolsState.selectedentity === "locations" && <h6>Locations</h6>}
-
         {showAddItemForm && toolsState.selectedentity === "categories" && (
           <h6>Add Category</h6>
         )}
@@ -74,7 +69,6 @@ const Editor = () => {
           showModalDelete={showModalDelete}
           setshowModalDelete={setshowModalDelete}
         />
-
         <div className="add-new-category hvr-pulse-grow" onClick={handleAdd}>
           <AddCircleOutlineIcon className="toolicon" />
           {toolsState.selectedentity === "categories" ? (
@@ -116,5 +110,4 @@ const Editor = () => {
     </div>
   )
 }
-
 export default Editor

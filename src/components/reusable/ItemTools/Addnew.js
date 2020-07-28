@@ -6,31 +6,26 @@ import {
 } from "../../../Types/CategoriesTypes"
 import "./Addnew.scss"
 import { motion } from "framer-motion"
-
 function Addnew({ setShowAddItemForm }) {
   const { dispatch, toolsState } = React.useContext(MainContext)
   const [newItemName, setnewItemName] = useState("")
   const [errorText, seterrorText] = useState("")
   const [entity, setEntity] = useState(toolsState.selectedentity)
-
   useEffect(() => {
     setEntity(toolsState.selectedentity)
   }, [toolsState.selectedentity])
-
   const handleSubmit = (e) => {
     e.preventDefault()
     if (newItemName) {
       toolsState.selectedentity === "categories"
         ? dispatch({ type: ADD_CATEGORY_ITEM, payload: newItemName })
         : dispatch({ type: ADD_LOCATION_ITEM, payload: newItemName })
-
       setShowAddItemForm(false)
       setnewItemName("")
     } else {
       seterrorText("Nothing has been added.")
       setTimeout(() => {
         seterrorText("")
-
         setShowAddItemForm(false)
       }, 1500)
     }
@@ -54,7 +49,6 @@ function Addnew({ setShowAddItemForm }) {
             {errorText}
           </motion.div>
         )}
-
         <form onSubmit={handleSubmit}>
           <input
             value={newItemName}
@@ -67,12 +61,10 @@ function Addnew({ setShowAddItemForm }) {
                 : "Enter New Location"
             }
           />
-
           <input type="submit" value="Submit" className="submit-button"></input>
         </form>
       </div>
     </>
   )
 }
-
 export default Addnew

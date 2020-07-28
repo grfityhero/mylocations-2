@@ -11,11 +11,9 @@ function Navbar() {
           className="d-inline-block align-top rounded"
           alt="My Locations App"
         />
-
         <h5>My Locations App</h5>
       </nav>
     </div>
   )
 }
-
 export default Navbar

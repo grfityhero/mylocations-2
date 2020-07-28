@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"
 import Select from "react-select"
 import MainContext from "../../../context/MainContext"
 import "./ItemInfoEditor.scss"
-
 const ItemInfoEditor = ({
   locationStateObj,
   setlocationStateObj,
@@ -15,7 +14,6 @@ const ItemInfoEditor = ({
   /*select element Default value */
   const [defVal, setDefVal] = useState({})
   const { state, toolsState } = React.useContext(MainContext)
-
   useEffect(() => {
     /*Fill the select element */
     let tmpArr = []
@@ -23,16 +21,18 @@ const ItemInfoEditor = ({
       tmpArr.push({ value: category.name, label: category.name })
     })
     setDropOptions(tmpArr)
-
     /*Set the select element's default value */
     setDefVal({
       value: locationStateObj.category,
       label: locationStateObj.category,
     })
-
     //console.log('#InfoEditor -refreshed locationStateObj:' ,locationStateObj)
-  }, [state.activeLocation, toolsState.showEditor, locationStateObj])
-
+  }, [
+    state.activeLocation,
+    toolsState.showEditor,
+    locationStateObj,
+    state.categories,
+  ])
   const handleChangeOption = (selectedOption) => {
     //console.log(selectedOption)
     setDefVal(selectedOption)
@@ -46,7 +46,6 @@ const ItemInfoEditor = ({
         <p>Address:</p>
         <p>Coordinates:</p>
       </div>
-
       <div className="values">
         <form onSubmit={handleSubmit}>
           <div className="category-title">
@@ -70,7 +69,6 @@ const ItemInfoEditor = ({
               </p>
             )}
           </div>
-
           <p>
             <input
               disabled={toolsState.selectedentity === "categories"}
@@ -89,7 +87,6 @@ const ItemInfoEditor = ({
               name="address"
             ></input>
           </p>
-
           <p>
             <input
               disabled={toolsState.selectedentity === "categories"}
@@ -127,5 +124,4 @@ const ItemInfoEditor = ({
     </div>
   )
 }
-
 export default ItemInfoEditor

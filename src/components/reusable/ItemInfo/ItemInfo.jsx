@@ -12,7 +12,6 @@ import "../../../styles/hover.css"
 import { EDIT_MODE } from "../../../Types/ToolsTypes"
 import ItemInfoViewer from "../ItemInfoEditor/ItemInfoViewer"
 import ItemInfoEditor from "../ItemInfoEditor/ItemInfoEditor"
-
 function ItemInfo({ setitmIndex, itmIndex }) {
   const { state, dispatch, toolsState, toolsDispatch } = React.useContext(
     MainContext
@@ -20,7 +19,6 @@ function ItemInfo({ setitmIndex, itmIndex }) {
   const [messages, setMessages] = useState("")
   const [showMsg, setShowMsg] = useState(false)
   const [showComponent, setShowComponent] = useState(true)
-
   /* Create an empty object to store a location  */
   const [locationStateObj, setlocationStateObj] = useState({
     name: "",
@@ -29,12 +27,9 @@ function ItemInfo({ setitmIndex, itmIndex }) {
     coordinatesLong: null,
     category: "",
   })
-
   useEffect(() => {
     /* entity to store categories or locations state */
-    let entity
     if (toolsState.selectedentity === "categories") {
-      entity = state.categories
       let tmpArr = state.locations.filter(
         (item) => item.category === state.activeCategory
       )
@@ -43,7 +38,6 @@ function ItemInfo({ setitmIndex, itmIndex }) {
       }
     } else {
       /* locations */
-      entity = state.locations
       setlocationStateObj({
         ...state.activeLocation,
         coordinatesLat: null,
@@ -60,17 +54,15 @@ function ItemInfo({ setitmIndex, itmIndex }) {
     state.activeCategory,
     state.activeLocation,
     toolsState.selectedentity,
+    state.locations,
   ])
-
   /* submit updates to item */
   const handleSubmit = (e) => {
     e.preventDefault()
-
     toolsDispatch({
       type: EDIT_MODE,
       payload: false,
     })
-
     /* update category name */
     if (toolsState.selectedentity === "categories") {
       dispatch({
@@ -89,13 +81,11 @@ function ItemInfo({ setitmIndex, itmIndex }) {
         coordinatesLat: state.coordsFromMap[0],
         coordinatesLong: state.coordsFromMap[1],
       }
-
       /* update location state */
       dispatch({
         type: UPDATE_LOCATION,
         payload: { obj: locationPayLoad, oldName: state.activeLocation.name },
       })
-
       dispatch({ type: ACTIVE_LOCATION, payload: locationPayLoad })
     }
     dispatch({ type: RESET })
@@ -107,7 +97,6 @@ function ItemInfo({ setitmIndex, itmIndex }) {
       setShowComponent(false)
     }, 1200)
   }
-
   const handleCancel = (e) => {
     e.preventDefault()
     setlocationStateObj(state.activeLocation)
@@ -121,7 +110,6 @@ function ItemInfo({ setitmIndex, itmIndex }) {
     //console.log("handleChange fires")
     e.preventDefault()
     let { value, name } = e.target
-
     /* //console.log("value: ", value)
     //console.log("name: ", name) */
     /* update a location object first */
@@ -166,5 +154,4 @@ function ItemInfo({ setitmIndex, itmIndex }) {
     </>
   )
 }
-
 export default ItemInfo

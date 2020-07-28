@@ -7,18 +7,15 @@ import {
 } from "../../../Types/CategoriesTypes"
 import "./modalDelete.scss"
 import { Modal, ModalBody } from "reactstrap"
-
 const ModalDeleteAction = ({ showModalDelete, setshowModalDelete, entity }) => {
   const { state, dispatch } = React.useContext(MainContext)
   const [active, setActive] = useState()
-
   /* watch for entity change */
   useEffect(() => {
     entity === "categories"
       ? setActive(state.activeCategory)
       : setActive(state.activeLocation)
-  }, [state.activeCategory, state.activeLocation])
-
+  }, [state.activeCategory, state.activeLocation, entity])
   const handleDelete = (confirm) => {
     if (entity === "categories" && confirm === true) {
       //console.log("categories entity->", entity, confirm)
@@ -62,5 +59,4 @@ const ModalDeleteAction = ({ showModalDelete, setshowModalDelete, entity }) => {
     </div>
   )
 }
-
 export default ModalDeleteAction

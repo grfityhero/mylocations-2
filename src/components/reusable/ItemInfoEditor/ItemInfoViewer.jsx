@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react"
 import MainContext from "../../../context/MainContext"
 import "./ItemInfoViewer.scss"
-
 function ItemInfoViewer({ setitmIndex, itmIndex }) {
   const { state, toolsState } = React.useContext(MainContext)
-  const [entity,setentity] = useState([])
 
   const [groupedLocation, setGroupedLocation] = useState([])
-
   useEffect(() => {
     /* Categories */
     if (toolsState.selectedentity === "categories") {
-      setentity(state.categories)
-
+    
       let arr = state.locations.filter(
         (item) => item.category === state.activeCategory
       )
@@ -31,29 +27,26 @@ function ItemInfoViewer({ setitmIndex, itmIndex }) {
         (item) => item.name === state.activeLocation.name
       )
       setGroupedLocation(arr)
-      setentity(arr)
+      
     }
   }, [
     toolsState.selectedentity,
     state.activeCategory,
     state.activeLocation,
-    itmIndex,
+    itmIndex,setitmIndex, state.categories, state.locations
   ])
   useEffect(() => {
     /* resete item index each time the active category change. */
     setitmIndex(0)
-  }, [state.activeCategory])
-
+  }, [state.activeCategory,setitmIndex])
   const handleNextLocation = () => {
     if (groupedLocation.length > 1 && itmIndex < groupedLocation.length - 1) {
       setitmIndex(itmIndex + 1)
     } else {
       //console.log("NO")
     }
-
     // //console.log(itmIndex)
   }
-
   const handlePrevLocation = () => {
     if (groupedLocation.length > 1 && !itmIndex < 1) {
       setitmIndex(itmIndex - 1)
@@ -63,7 +56,6 @@ function ItemInfoViewer({ setitmIndex, itmIndex }) {
     /*   //console.log(groupedLocation.length)
     //console.log(itmIndex) */
   }
-
   return (
     <>
       {toolsState.selectedentity === "categories" && (
@@ -78,7 +70,6 @@ function ItemInfoViewer({ setitmIndex, itmIndex }) {
               aria-hidden="true"
             ></i>
           </button>
-
           <button
             className="btn-next-prev hvr-bounce-in"
             disabled={
@@ -101,7 +92,6 @@ function ItemInfoViewer({ setitmIndex, itmIndex }) {
           <p>Address:</p>
           <p>Coordinates:</p>
         </div>
-
         {groupedLocation.length > 0 ? (
           <div className="values">
             <p>{groupedLocation[itmIndex].category}</p>
@@ -122,5 +112,4 @@ function ItemInfoViewer({ setitmIndex, itmIndex }) {
     </>
   )
 }
-
 export default ItemInfoViewer
