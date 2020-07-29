@@ -148,6 +148,8 @@ export const reducer = (state, action) => {
     }
     /*UPDATE_CATEGORY adding a location object from payload  */
     case UPDATE_CATEGORY: {
+      console.log("UPDATE_CATEGORY  ", action.payload)
+     
       localStorage.setItem(
         "state",
         JSON.stringify({
@@ -156,7 +158,8 @@ export const reducer = (state, action) => {
             // eslint-disable-next-line
             ...state.locations.map((itm) => {
               if (itm.category === action.payload.oldName) {
-                itm.category = action.payload.newName
+                // itm.category = action.payload.newName
+                return action.payload.newName
               } else {
                 return itm
               }
@@ -177,7 +180,8 @@ export const reducer = (state, action) => {
           // eslint-disable-next-line
           ...state.locations.map((itm) => {
             if (itm.category === action.payload.oldName) {
-              itm.category = action.payload.newName
+              // itm.category = action.payload.newName
+              return action.payload.newName
             } else {
               return itm
             }
