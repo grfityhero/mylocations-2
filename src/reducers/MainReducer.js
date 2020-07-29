@@ -148,7 +148,7 @@ export const reducer = (state, action) => {
     }
     /*UPDATE_CATEGORY adding a location object from payload  */
     case UPDATE_CATEGORY: {
-      console.log("UPDATE_CATEGORY  ", action.payload)
+      console.log("UPDATE_CATEGORY -  ", action.payload)
      
       localStorage.setItem(
         "state",
@@ -159,7 +159,7 @@ export const reducer = (state, action) => {
             ...state.locations.map((itm) => {
               if (itm.category === action.payload.oldName) {
                 // itm.category = action.payload.newName
-                return action.payload.newName
+                return {...itm ,category: action.payload.newName}
               } else {
                 return itm
               }
@@ -181,7 +181,7 @@ export const reducer = (state, action) => {
           ...state.locations.map((itm) => {
             if (itm.category === action.payload.oldName) {
               // itm.category = action.payload.newName
-              return action.payload.newName
+              return {...itm,category: action.payload.newName}
             } else {
               return itm
             }
