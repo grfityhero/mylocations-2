@@ -21,13 +21,7 @@ function ItemInfo({ setitmIndex, itmIndex }) {
   const [showMsg, setShowMsg] = useState(false)
   const [showComponent, setShowComponent] = useState(true)
   /* Create an empty object to store a location  */
-  const [locationStateObj, setlocationStateObj] = useState({
-    name: "",
-    address: "",
-    coordinatesLat: null,
-    coordinatesLong: null,
-    category: "",
-  })
+  const [locationStateObj, setlocationStateObj] = useState({})
   useEffect(() => {
     /* entity to store categories or locations state */
     if (toolsState.selectedentity === "categories") {
@@ -41,8 +35,8 @@ function ItemInfo({ setitmIndex, itmIndex }) {
       /* locations */
       setlocationStateObj({
         ...state.activeLocation,
-        coordinatesLat: null,
-        coordinatesLong: null,
+        coordinatesLat: state.activeLocation.coordinatesLat,
+        coordinatesLong: state.activeLocation.coordinatesLong,
       })
     }
     if (state.activeCategory || state.activeLocation !== "") {
@@ -73,14 +67,12 @@ function ItemInfo({ setitmIndex, itmIndex }) {
           newName: locationStateObj.category,
         },
       })
-     
     } else {
       /* update location state */
-         dispatch({
+      dispatch({
         type: UPDATE_LOCATION,
         payload: { obj: locationStateObj, oldName: state.activeLocation.name },
-      }) 
-
+      })
     }
     dispatch({ type: RESET })
     setMessages("Updated successfully!")
@@ -97,11 +89,11 @@ function ItemInfo({ setitmIndex, itmIndex }) {
       type: EDIT_MODE,
       payload: false,
     })
-    /*  seteditMode(false) */
+   
   }
   const handleChange = (e) => {
     let tmpLocation = {}
-     /* onchange triggered from map click? */
+    /* onchange triggered from map click? */
     if (!e.target.name || !e.target.name) {
       /*yes so - update a location object's coords */
       tmpLocation = {
@@ -109,14 +101,14 @@ function ItemInfo({ setitmIndex, itmIndex }) {
         coordinatesLat: e.latlng.lat,
         coordinatesLong: e.latlng.lng,
       }
-      setlocationStateObj({...tmpLocation})
+      setlocationStateObj({ ...tmpLocation })
       /* dispatch to update inputs */
       let tmpArr = []
       tmpArr.push(e.latlng.lat)
       tmpArr.push(e.latlng.lng)
       dispatch({ type: COORDS_FROM_MAP, payload: tmpArr })
-     
     } else {
+  
       /* triggered from form inputs*/
       let name = e.target.name
       let value = e.target.value
@@ -125,9 +117,9 @@ function ItemInfo({ setitmIndex, itmIndex }) {
         ...locationStateObj,
         [name]: value,
       }
-      setlocationStateObj({...tmpLocation})
+      setlocationStateObj({ ...tmpLocation })
     }
-  
+    
   }
   return (
     <>

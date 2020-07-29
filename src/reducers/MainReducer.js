@@ -120,8 +120,8 @@ export const reducer = (state, action) => {
     }
     /*UPDATE_LOCATION UPDATE a location object from payload  */
     case UPDATE_LOCATION: {
-      console.log("obj : ", action.payload.obj)
-      console.log("oldName : ", action.payload.oldName)
+      /* console.log("obj : ", action.payload.obj)
+      console.log("oldName : ", action.payload.oldName) */
       localStorage.setItem(
         "state",
         JSON.stringify({

@@ -8,7 +8,6 @@ function ItemInfoViewer({ setitmIndex, itmIndex }) {
   useEffect(() => {
     /* Categories */
     if (toolsState.selectedentity === "categories") {
-    
       let arr = state.locations.filter(
         (item) => item.category === state.activeCategory
       )
@@ -27,18 +26,20 @@ function ItemInfoViewer({ setitmIndex, itmIndex }) {
         (item) => item.name === state.activeLocation.name
       )
       setGroupedLocation(arr)
-      
     }
   }, [
     toolsState.selectedentity,
     state.activeCategory,
     state.activeLocation,
-    itmIndex,setitmIndex, state.categories, state.locations
+    itmIndex,
+    setitmIndex,
+    state.categories,
+    state.locations,
   ])
   useEffect(() => {
     /* resete item index each time the active category change. */
     setitmIndex(0)
-  }, [state.activeCategory,setitmIndex])
+  }, [state.activeCategory, setitmIndex])
   const handleNextLocation = () => {
     if (groupedLocation.length > 1 && itmIndex < groupedLocation.length - 1) {
       setitmIndex(itmIndex + 1)
