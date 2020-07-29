@@ -48,3 +48,9 @@
     min-width: 89px;
   }
 }
+
+@media (max-width: 1000px) {
+  .CatInfo-main-wrapper {
+    width: 100%;
+  }
+}

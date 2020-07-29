@@ -1,6 +1,7 @@
 @import "../../Colors/ColorSchema.scss";
 
 .bottombar-section {
+  z-index: 999;
   position: fixed;
   bottom: 0px;
   left: 0px;
