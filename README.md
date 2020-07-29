@@ -2,7 +2,7 @@
 
 Ex-2    
 Added tools reducer.    
-Moved all reducers and inital states to seperate files.  
+Moved all reducers and initalstates to seperate files.  
 Bottom bar with 2 entity types.  
 Locations management.  
 Sort,Group,Filter - locations.  
