@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react"
 import MainContext from "../../../context/MainContext"
+import MapMain from "../Map/MapMain"
 import "./ItemInfo.scss"
 import {
   UPDATE_LOCATION,
   UPDATE_CATEGORY,
-  ACTIVE_LOCATION,
   RESET,
+  COORDS_FROM_MAP,
 } from "../../../Types/CategoriesTypes"
 import { motion } from "framer-motion"
 import "../../../styles/hover.css"
@@ -72,24 +73,16 @@ function ItemInfo({ setitmIndex, itmIndex }) {
           newName: locationStateObj.category,
         },
       })
-      //console.log(state.activeCategory, locationStateObj)
+     
     } else {
-      //console.log("SUBMIT: ", state.activeLocation)
-      /* update location object first */
-      let locationPayLoad = {
-        ...locationStateObj,
-        coordinatesLat: state.coordsFromMap[0],
-        coordinatesLong: state.coordsFromMap[1],
-      }
       /* update location state */
-      dispatch({
+         dispatch({
         type: UPDATE_LOCATION,
-        payload: { obj: locationPayLoad, oldName: state.activeLocation.name },
-      })
-      dispatch({ type: ACTIVE_LOCATION, payload: locationPayLoad })
+        payload: { obj: locationStateObj, oldName: state.activeLocation.name },
+      }) 
+
     }
     dispatch({ type: RESET })
-    /*  dispatch({ type: SORT_ITEMS, payload: "ASC" }) */
     setMessages("Updated successfully!")
     setShowMsg(true)
     setTimeout(() => {
@@ -107,19 +100,34 @@ function ItemInfo({ setitmIndex, itmIndex }) {
     /*  seteditMode(false) */
   }
   const handleChange = (e) => {
-    //console.log("handleChange fires")
-    e.preventDefault()
-    let { value, name } = e.target
-    /* //console.log("value: ", value)
-    //console.log("name: ", name) */
-    /* update a location object first */
-    let tmpLocation = {
-      ...state.activeLocation,
-      [name]: value,
-      coordinatesLat: state.coordsFromMap[0],
-      coordinatesLong: state.coordsFromMap[1],
+    let tmpLocation = {}
+     /* onchange triggered from map click? */
+    if (!e.target.name || !e.target.name) {
+      /*yes so - update a location object's coords */
+      tmpLocation = {
+        ...locationStateObj,
+        coordinatesLat: e.latlng.lat,
+        coordinatesLong: e.latlng.lng,
+      }
+      setlocationStateObj({...tmpLocation})
+      /* dispatch to update inputs */
+      let tmpArr = []
+      tmpArr.push(e.latlng.lat)
+      tmpArr.push(e.latlng.lng)
+      dispatch({ type: COORDS_FROM_MAP, payload: tmpArr })
+     
+    } else {
+      /* triggered from form inputs*/
+      let name = e.target.name
+      let value = e.target.value
+      /* update a location object  */
+      tmpLocation = {
+        ...locationStateObj,
+        [name]: value,
+      }
+      setlocationStateObj({...tmpLocation})
     }
-    setlocationStateObj(tmpLocation)
+  
   }
   return (
     <>
@@ -138,6 +146,13 @@ function ItemInfo({ setitmIndex, itmIndex }) {
           )}
         </div>
       )}
+      <div className="map-main-wrapper">
+        <MapMain
+          setitmIndex={setitmIndex}
+          itmIndex={itmIndex}
+          handleChange={handleChange}
+        />
+      </div>
       {showMsg ? (
         <motion.div
           className="anim1"

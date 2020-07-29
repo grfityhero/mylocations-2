@@ -17,6 +17,7 @@ const ItemInfoEditor = ({
   useEffect(() => {
     /*Fill the select element */
     let tmpArr = []
+    // eslint-disable-next-line 
     state.categories.map((category) => {
       tmpArr.push({ value: category.name, label: category.name })
     })
@@ -26,7 +27,6 @@ const ItemInfoEditor = ({
       value: locationStateObj.category,
       label: locationStateObj.category,
     })
-    //console.log('#InfoEditor -refreshed locationStateObj:' ,locationStateObj)
   }, [
     state.activeLocation,
     toolsState.showEditor,

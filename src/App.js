@@ -14,7 +14,7 @@ import initialState from "./LocalStorage/initialState.js"
 import toolsInitialState from "./LocalStorage/toolsInitialState.js"
 import ItemSelector from "./components/reusable/ItemSelector/ItemSelector"
 import ItemInfo from "./components/reusable/ItemInfo/ItemInfo"
-import MapMain from "./components/reusable/Map/MapMain"
+
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState)
   const [toolsState, toolsDispatch] = useReducer(
@@ -31,6 +31,7 @@ useEffect(() => {
     >
       <div className="App">
         <Navbar />
+        
         <div className="entity-wrapper container rounded shadow ">
           <div className="editor-component-wrapper">
             <Editor />
@@ -41,9 +42,7 @@ useEffect(() => {
             </div>
             <div className="CatInfo-main-wrapper">
               <ItemInfo setitmIndex={setitmIndex} itmIndex={itmIndex} />
-              <div className="map-main-wrapper">
-                <MapMain setitmIndex={setitmIndex} itmIndex={itmIndex} />
-              </div>
+             
             </div>
           </div>
         </div>

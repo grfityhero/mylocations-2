@@ -3,14 +3,16 @@ import { Map, Marker, Popup, TileLayer } from "react-leaflet"
 import "./MainMap.scss"
 import MainContext from "../../../context/MainContext"
 import { COORDS_FROM_MAP } from "../../../Types/CategoriesTypes"
-function MapMain({ itmIndex }) {
+function MapMain({ itmIndex, handleChange }) {
   const { state, dispatch, toolsState } = React.useContext(MainContext)
   const [position, setposition] = useState(null)
   const [curLocation, setcurLocation] = useState([])
+
   useEffect(() => {
     let coordArr = []
     let locArr = []
     let newPosition = []
+    // eslint-disable-next-line 
     state.locations.map((location) => {
       switch (toolsState.selectedentity) {
         case "categories":
@@ -48,18 +50,19 @@ function MapMain({ itmIndex }) {
   ])
   const handleMapClick = (e) => {
     if (toolsState.selectedentity === "locations" && toolsState.editMode) {
-      let tmpArr = []
-      tmpArr.push(e.latlng.lat)
-      tmpArr.push(e.latlng.lng)
-      dispatch({ type: COORDS_FROM_MAP, payload: tmpArr })
+      /* send clicked coordinates to handleChange */
+      handleChange(e)
     } else {
+      /* reset coordinates in main reducer */
       dispatch({ type: COORDS_FROM_MAP, payload: [] })
     }
   }
   return (
     <div className="map-wrapper">
       {toolsState.editMode && (
-        <div className="map-click">Click on the map to pick coordinates </div>
+        <>
+          <div className="map-click">Click on the map to pick coordinates </div>
+        </>
       )}
       {position && (
         <>
