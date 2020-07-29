@@ -7,7 +7,7 @@ Bottom bar with 2 entity types.
 Locations management.  
 Sort,Group,Filter - locations.  
 Location - Category select from list.  
-showing location on map. (Leaflet library )
+showing location on map. (Leaflet library )  
 Pick coordinates from the map by clicking.
 
 #####
